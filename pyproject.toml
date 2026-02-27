@@ -1,0 +1,172 @@
+[build-system]
+requires = ["setuptools>=42", "setuptools-git-versioning", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alab_gpss"
+description = "Code to operate the GPSS"
+#readme = "README.md"
+keywords = ["self-driving labs", "autonomous", "synthesis", "materials", "inorganic", "solid-state"]
+authors = [
+    { name = "Yuxing Fei", email = "yuxingfei@berkeley.edu" },
+]
+dynamic = ["version"]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.10",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "alab-control@git+https://github.com/CederGroupHub/alab_control",
+    "alab-management@git+https://github.com/CederGroupHub/alab_management",
+    "uvicorn",
+    "fastapi",
+    "ReactionCompleter@git+https://github.com/idocx/ReactionCompleter",
+    "material_parser@git+https://github.com/idocx/MaterialParser",
+    "easy-biologic>=0.4.0",
+    "keyboard>=0.13.5",
+    "qrcode==8.2",
+    "dara-xrd>=1.1.4",
+    "impedance>=1.7.1",
+    "asgiref>=3.8.1",
+    "ipykernel>=7.1.0",
+    "plotly>=5.24.0",
+    "kaleido>=1.1.0",
+    "litellm>=1.80.0",
+    "nbformat>=5.10.4",
+    "numpy>=2",
+    "openai-agents>=0.6.0",
+    "pandas>=2.3.3",
+    "pydantic>=2.8.2",
+    "pymatgen>=2025.10.7",
+    "pymongo>=3.1",
+    "Flask>=3.0.0",
+    "botorch>=0.16.1",
+    "scikit-learn>=1.7.2",
+    "gpytorch>=1.14.3",
+    "uncertainties>=3.2.3",
+    "json-repair>=0.55.0",
+    "matminer",
+    "networkx>=3.4.2",
+    "bson>=0.5.10",
+    "requests>=2.32.5",
+]
+
+[project.optional-dependencies]
+strict = [
+    "alab-control@git+https://github.com/CederGroupHub/alab_control",
+    "alab-management@git+https://github.com/CederGroupHub/alab_management",
+    "uvicorn==0.34.1",
+    "fastapi==0.115.12",
+    "easy-biologic==0.4.0",
+]
+tests = [
+    "pytest==8.0.1",
+    "pytest-cov==4.1.0",
+]
+
+[project.scripts]
+alab_gpss = "alab_gpss.cli:cli"
+
+[tool.versioningit.vcs]
+method = "git"
+default-tag = "0.0.1"
+
+[tool.coverage.run]
+include = ["src/*"]
+parallel = true
+branch = false
+
+[tool.coverage.paths]
+source = ["src/"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = [
+    '\#\s*pragma: no cover',
+    '^\s*assert False(,|$)',
+    'if typing.TYPE_CHECKING:',
+    '^\s*@overload( |$)',
+    'if TYPE_CHECKING:',
+]
+
+[tool.mypy]
+ignore_missing_imports = true
+namespace_packages = true
+explicit_package_bases = true
+no_implicit_optional = false
+follow_imports = "skip"
+disable_error_code = "annotation-unchecked"
+
+[tool.ruff]
+target-version = "py39"
+lint.select = [
+    "B", # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "D", # pydocstyle
+    "E", # pycodestyle error
+    "EXE", # flake8-executable
+    "F", # pyflakes
+    "FA", # flake8-future-annotations
+    "FBT003", # boolean-positional-value-in-call
+    "FLY", # flynt
+    "I", # isort
+    "ICN", # flake8-import-conventions
+    "ISC", # flake8-implicit-str-concat
+    "PD", # pandas-vet
+    "PERF", # perflint
+    "PIE", # flake8-pie
+    "PL", # pylint
+    "PT", # flake8-pytest-style
+    "PYI", # flakes8-pyi
+    "Q", # flake8-quotes
+    "RET", # flake8-return
+    "RSE", # flake8-raise
+    "RUF", # Ruff-specific rules
+    "SIM", # flake8-simplify
+    "SLOT", # flake8-slots
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "UP", # pyupgrade
+    "W", # pycodestyle warning
+    "YTT", # flake8-2020
+]
+lint.ignore = [
+    "B023", # Function definition does not bind loop variable
+    "B028", # No explicit stacklevel keyword argument found
+    "B904", # Within an except clause, raise exceptions with ...
+    "C408", # unnecessary-collection-call
+    "D105", # Missing docstring in magic method
+    "D205", # 1 blank line required between summary line and description
+    "D212", # Multi-line docstring summary should start at the first line
+    "PD011", # pandas-use-of-dot-values
+    "PD901", # pandas-df-variable-name
+    "PERF203", # try-except-in-loop
+    "PERF401", # manual-list-comprehension (TODO fix these or wait for autofix)
+    "PLR", # pylint-refactor
+    "PLW2901", # Outer for loop variable overwritten by inner assignment target
+    "PT004", # pytest-missing-fixture-name-underscore
+    "PT006", # pytest-parametrize-names-wrong-type
+    "PT013", # pytest-incorrect-pytest-import
+    "PYI024", # collections-named-tuple (TODO should maybe fix these)
+    "RUF012", # Disable checks for mutable class args. This is a non-problem.
+    "RUF013", # implicit-optional
+    "SIM105", # Use contextlib.suppress(OSError) instead of try-except-pass
+    "PLE0704", # Checks for bare raise statements outside of exception handlers
+]
+lint.pydocstyle.convention = "google"
+lint.isort.known-first-party = ["alab_one"]
+line-length = 120
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"tests/**" = ["ANN201", "D", "S101"]
+
+[tool.setuptools.package-data]
+alab_one = ["py.typed"]
+
+[tool.setuptools-git-versioning]
+enabled = true

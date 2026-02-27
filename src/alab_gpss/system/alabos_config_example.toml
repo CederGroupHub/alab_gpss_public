@@ -1,0 +1,30 @@
+[general]
+name = "Alab_GPSS"
+working_dir = ""
+auto_refresh = false
+
+[mongodb]
+host = "localhost"
+password = ""
+port = 27017
+username = ""
+
+[mongodb_completed]
+host = "localhost"
+password = ""
+port = 27017
+username = ""
+
+[rabbitmq]
+host = "localhost"
+port = 5672
+
+[alarm]
+email_password = ""
+email_receivers = []
+email_sender = ""
+slack_bot_token = ""
+slack_channel_id = ""
+
+[large_result_storage]
+default_storage_type = "gridfs"
