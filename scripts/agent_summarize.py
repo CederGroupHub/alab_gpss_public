@@ -9,7 +9,7 @@ from pymongo import MongoClient
 from pymatgen.core import Composition
 import rich
 from typing import Iterable
-from experiment_design import (
+from agent_prompts import (
     MaterialDataAbnormalityResult,
     NewExperiment,
     NewMaterialProposal,
@@ -33,8 +33,6 @@ def safely_get_composition(composition):
 
 def remove_sample_id(data: Iterable[dict]) -> list[dict]:
     """Return a deep-copied list with sample_id, batch_number, sample_index, and provenance stripped from each entry."""
-    from copy import deepcopy
-
     sanitized = deepcopy(list(data))
     for entry in sanitized:
         entry.pop("sample_id", None)

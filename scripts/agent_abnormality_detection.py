@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Iterable
 
-from experiment_design import ExperimentDesignWorkflow
+from agent_prompts import ExperimentDesignWorkflow
 from monty.serialization import loadfn
 
 

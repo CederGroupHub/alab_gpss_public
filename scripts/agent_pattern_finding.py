@@ -5,19 +5,16 @@ from __future__ import annotations
 
 import asyncio
 import json
-import subprocess
-import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Iterable
 
 from monty.serialization import loadfn
 
-from experiment_design import ExperimentDesignWorkflow
+from agent_prompts import ExperimentDesignWorkflow
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATASET_PATH = PROJECT_ROOT / "data" / "dataset.json"
-GENERATE_SCRIPT_PATH = PROJECT_ROOT / "scripts" / "generate_tabulated_data.py"
 
 
 def remove_sample_id(data: Iterable[dict]) -> list[dict]:
@@ -42,17 +39,6 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    subprocess.run(
-        [
-            sys.executable,
-            str(GENERATE_SCRIPT_PATH),
-            "--output",
-            str(DATASET_PATH),
-        ],
-        cwd=PROJECT_ROOT,
-        check=True,
-    )
-
     result = asyncio.run(main())
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

@@ -33,7 +33,7 @@ from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Normalizer
 
-from experiment_design import (
+from agent_prompts import (
     ExperimentDesignWorkflow,
     NewMaterialProposalResponse,
 )
