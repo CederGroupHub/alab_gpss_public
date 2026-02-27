@@ -184,7 +184,7 @@ def generate_random_compositions_discrete(
         1.0,
     ),
     elem_range: tuple[int, int] = (4, 6),
-    num_samples: int = 10000,
+    num_samples: int = 5000,
     li_content_range: tuple[float, float] = (1.2, 2.0),
     metal_content_range: tuple[float, float] = (0.9, 1.2),
     max_trials: int = 20000000,
@@ -224,7 +224,7 @@ def generate_random_compositions_discrete(
 
 def run_bayesian_optimization(
     data_path: str | Path = DATA_PATH,
-    num_candidates: int = 10000,
+    num_candidates: int = 5000,
     k_diverse: int = 40,
     ucb_beta: float = 1.5,
     phase_purity_weight: float = 5.0,
