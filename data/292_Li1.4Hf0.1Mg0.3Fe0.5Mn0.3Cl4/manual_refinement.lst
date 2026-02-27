@@ -1,0 +1,71 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 132 peaks, 66 parameters
+Start: Thu Feb 26 14:50:11 2026; End: Thu Feb 26 14:50:16 2026
+55 iteration steps
+
+Rp=3.34%  Rpb=41.03%  R=4.54%  Rwp=4.41% Rexp=2.53%
+Durbin-Watson d=0.70
+1-rho=6.44%
+
+Global parameters and GOALs
+****************************
+Qspinel=0.8450+-0.0027
+QLi6FeCl8225icsd7321731=0.0811+-0.0022
+QFeCl2=0.0739+-0.0021
+EPS2=-0.002813+-0.000030
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.585
+Rphase=6.06%
+UNIT=NM
+A=1.043487+-0.000075
+k1=0.0100000
+B1=0.02419+-0.00025
+GrainSize(1,1,1)=17.40+-0.18
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.101298
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1400))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4200))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.3500),HF(0.0500),MG(0.1500),MN(0.1500),FE(0.2500))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase Li6FeCl8225icsd7321731
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.325
+Rphase=5.74%
+UNIT=NM
+A=1.028782+-0.000094
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00972366
+Atomic positions for phase Li6FeCl8225icsd7321731
+---------------------------------------------
+ 24     0.0000  0.2500  0.2500     E=(LI+1(1.0000))
+  4     0.0000  0.0000  0.0000     E=(FE+2(1.0000))
+  8     0.2500  0.2500  0.2500     E=(CL-1(1.0000))
+ 24     0.2410  0.0000  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase FeCl2
+******************************************************
+SpacegroupNo=166
+HermannMauguin=R-32/m
+XrayDensity=3.155
+Rphase=5.77%
+UNIT=NM
+A=0.362371+-0.000047
+C=1.75999+-0.00029
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00886046
+Atomic positions for phase FeCl2
+---------------------------------------------
+  3     0.0000  0.0000  0.0000     E=(FE+2(1.0000))
+  6     0.0000  0.0000  0.2500     E=(CL-1(1.0000))

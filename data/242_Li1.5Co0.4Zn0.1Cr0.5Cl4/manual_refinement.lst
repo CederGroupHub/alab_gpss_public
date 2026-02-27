@@ -1,0 +1,116 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 588 peaks, 65 parameters
+Start: Thu Feb 26 14:52:59 2026; End: Thu Feb 26 14:53:20 2026
+143 iteration steps
+
+Rp=3.30%  Rpb=45.91%  R=5.26%  Rwp=4.57% Rexp=1.93%
+Durbin-Watson d=0.37
+1-rho=7.49%
+
+Global parameters and GOALs
+****************************
+QCrCl312icsd220800=0.0473+-0.0022
+Qspinel=0.7611+-0.0056
+QLiCl225icsd269090=0
+QLi2CrCl415icsd20262739=0.0970+-0.0033
+QLi6CoCl8225icsd20240131=0.0945+-0.0037
+EPS2=-0.002996+-0.000029
+
+Local parameters and GOALs for phase CrCl312icsd220800
+******************************************************
+SpacegroupNo=12
+HermannMauguin=C12/m1
+XrayDensity=2.886
+Rphase=6.95%
+UNIT=NM
+A=0.60416+-0.00034
+B=1.03369+-0.00059
+C=0.61344+-0.00031
+BETA=107.965+-0.038
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=0.00923+-0.00043
+Atomic positions for phase CrCl312icsd220800
+---------------------------------------------
+  4     0.0000  0.1667  0.0000     E=(CR+3(1.0000))
+  4     0.7795  0.0000  0.7684     E=(CL-1(1.0000))
+  8     0.2488  0.8231  0.7711     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.570
+Rphase=7.70%
+UNIT=NM
+A=1.024932+-0.000072
+k1=0.0100000
+B1=0.01980+-0.00028
+GrainSize(1,1,1)=21.26+-0.30
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.148510
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1500))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4500))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.3750),ZN(0.0500),CR(0.2500),CO(0.2000))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.086
+Rphase=100.00%
+UNIT=NM
+A=UNDEF
+k1=UNDEF
+B1=UNDEF
+GrainSize(1,1,1)=UNDEF
+GEWICHT=0.0
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li2CrCl415icsd20262739
+******************************************************
+SpacegroupNo=15
+HermannMauguin=C12/c1
+XrayDensity=2.420
+Rphase=8.83%
+UNIT=NM
+A=1.01939+-0.00039
+B=1.01855+-0.00037
+C=0.72864+-0.00028
+BETA=131.107+-0.022
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=0.01894+-0.00066
+Atomic positions for phase Li2CrCl415icsd20262739
+---------------------------------------------
+  4     0.0000  0.8120  0.2500     E=(LI+1(1.0000))
+  4     0.0000  0.5000  0.0000     E=(LI+1(1.0000))
+  4     0.2500  0.2500  0.5000     E=(CR+2(1.0000))
+  8     0.5080  0.7580  0.5023     E=(CL-1(1.0000))
+  8     0.2540  0.0073  0.4982     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li6CoCl8225icsd20240131
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.321
+Rphase=6.62%
+UNIT=NM
+A=1.032164+-0.000092
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0184487
+Atomic positions for phase Li6CoCl8225icsd20240131
+---------------------------------------------
+ 24     0.0000  0.2500  0.2500     E=(LI+1(1.0000))
+  4     0.0000  0.0000  0.0000     E=(CO+2(1.0000))
+  8     0.2500  0.2500  0.2500     E=(CL-1(1.0000))
+ 24     0.2430  0.0000  0.0000     E=(CL-1(1.0000))

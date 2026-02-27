@@ -1,0 +1,75 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 322 peaks, 66 parameters
+Start: Thu Feb 26 15:13:19 2026; End: Thu Feb 26 15:13:26 2026
+50 iteration steps
+
+Rp=2.93%  Rpb=41.80%  R=3.89%  Rwp=3.77% Rexp=2.37%
+Durbin-Watson d=0.84
+1-rho=5.59%
+
+Global parameters and GOALs
+****************************
+Qspinel=0.8605+-0.0036
+QLiCl225icsd269090=0.0569+-0.0021
+QLi3YCl6164icsd29962None=0.0826+-0.0030
+EPS2=-0.001689+-0.000025
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.538
+Rphase=4.83%
+UNIT=NM
+A=1.042699+-0.000063
+k1=0.0100000
+B1=0.01957+-0.00019
+GrainSize(1,1,1)=21.51+-0.21
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0987013
+Atomic positions for phase spinel
+---------------------------------------------
+  8     0.5000  0.5000  0.5000     E=(LI(0.5400))
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1800))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.4500),Y(0.1000),MN(0.1000),FE(0.3000))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.044
+Rphase=4.39%
+UNIT=NM
+A=0.516471+-0.000053
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00652193
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li3YCl6164icsd29962None
+******************************************************
+SpacegroupNo=164
+HermannMauguin=P-32/m1
+XrayDensity=2.434
+Rphase=4.56%
+UNIT=NM
+A=1.12219+-0.00015
+C=0.60495+-0.00015
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00947658
+Atomic positions for phase Li3YCl6164icsd29962None
+---------------------------------------------
+  6     0.3252  0.0000  0.5000     E=(LI+1(0.7300))
+  6     0.3392  0.0000  0.0000     E=(LI+1(0.7700))
+  1     0.0000  0.0000  0.0000     E=(Y+3(1.0000))
+  2     0.3333  0.6667  0.0117     E=(Y+3(0.2288))
+  2     0.3333  0.6667  0.5053     E=(Y+3(0.7712))
+  6     0.8862 -0.8862  0.2375     E=(CL-1(1.0000))
+  6     0.7799 -0.7799  0.7329     E=(CL-1(1.0000))
+  6     0.5528 -0.5528  0.2518     E=(CL-1(1.0000))

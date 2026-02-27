@@ -1,0 +1,52 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 93 peaks, 33 parameters
+Start: Thu Feb 26 14:54:06 2026; End: Thu Feb 26 14:54:08 2026
+25 iteration steps
+
+Rp=2.48%  Rpb=58.06%  R=3.28%  Rwp=3.12% Rexp=2.21%
+Durbin-Watson d=1.02
+1-rho=11.4%
+
+Global parameters and GOALs
+****************************
+QLi6VCl8225icsd1008340=0.0075+-0.0027
+Qspinel=0.9925+-0.0027
+EPS2=-0.001128+-0.000050
+
+Local parameters and GOALs for phase Li6VCl8225icsd1008340
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.288
+Rphase=3.51%
+UNIT=NM
+A=1.02982+-0.00027
+k1=UNDEF
+B1=0
+GrainSize(1,1,1)=ERROR
+GEWICHT=0.00055+-0.00020
+Atomic positions for phase Li6VCl8225icsd1008340
+---------------------------------------------
+ 24     0.0000  0.2500  0.2500     E=(LI+1(1.0000))
+  4     0.0000  0.0000  0.0000     E=(V+2(1.0000))
+  8     0.2500  0.2500  0.2500     E=(CL-1(1.0000))
+ 24     0.2450  0.0000  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.619
+Rphase=3.99%
+UNIT=NM
+A=1.02606+-0.00013
+k1=0.0100000
+B1=0.02832+-0.00035
+GrainSize(1,1,1)=14.86+-0.18
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0730939
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1500))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4500))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.3750),NB(0.0500),V(0.1000),CO(0.3500))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))

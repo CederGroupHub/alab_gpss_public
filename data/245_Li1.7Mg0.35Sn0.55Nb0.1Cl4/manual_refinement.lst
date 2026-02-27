@@ -1,0 +1,70 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 242 peaks, 67 parameters
+Start: Thu Feb 26 15:10:41 2026; End: Thu Feb 26 15:10:45 2026
+34 iteration steps
+
+Rp=5.48%  Rpb=39.13%  R=6.32%  Rwp=7.17% Rexp=3.37%
+Durbin-Watson d=0.52
+1-rho=6.88%
+
+Global parameters and GOALs
+****************************
+QLi2MgCl4227icsd74957None=0.3549+-0.0022
+QLiCl225icsd269090=0.3601+-0.0024
+QSnCl262icsd154520=0.2851+-0.0019
+EPS2=0.000101+-0.000011
+
+Local parameters and GOALs for phase Li2MgCl4227icsd74957None
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.109
+Rphase=11.45%
+UNIT=NM
+A=1.042798+-0.000030
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0291997
+Atomic positions for phase Li2MgCl4227icsd74957None
+---------------------------------------------
+  8     0.5000  0.5000  0.5000     E=(LI+1(1.0000))
+ 16     0.1250  0.1250  0.1250     E=(LI+1(0.5000),MG+2(0.5000))
+ 32     0.8820  0.8820  0.8820     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.064
+Rphase=12.41%
+UNIT=NM
+A=0.514742+-0.000014
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0296246
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase SnCl262icsd154520
+******************************************************
+SpacegroupNo=62
+HermannMauguin=P2_1/n2_1/m2_1/a
+XrayDensity=3.954
+Rphase=8.78%
+UNIT=NM
+A=0.779782+-0.000044
+B=0.443449+-0.000025
+C=0.920926+-0.000047
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0234543
+Atomic positions for phase SnCl262icsd154520
+---------------------------------------------
+  4     0.7310  0.2500  0.5740     E=(SN+2(1.0000))
+  4     0.5220  0.2500  0.3450     E=(CL-1(1.0000))
+  4     0.1440  0.2500  0.5750     E=(CL-1(1.0000))

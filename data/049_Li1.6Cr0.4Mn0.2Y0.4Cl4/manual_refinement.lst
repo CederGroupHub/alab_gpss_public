@@ -1,0 +1,75 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 364 peaks, 54 parameters
+Start: Thu Feb 26 15:02:59 2026; End: Thu Feb 26 15:03:52 2026
+512 iteration steps
+
+Rp=5.92%  Rpb=77.00%  R=8.37%  Rwp=8.22% Rexp=2.97%
+Durbin-Watson d=0.31
+1-rho=31.3%
+
+Global parameters and GOALs
+****************************
+QCrCl258icsd19294270=0.1202+-0.0070
+QLi3YCl6164icsd29966None=0.6565+-0.0082
+QLiCl225icsd269090=0.2233+-0.0063
+EPS2=-0.001210+-0.000034
+
+Local parameters and GOALs for phase CrCl258icsd19294270
+******************************************************
+SpacegroupNo=58
+HermannMauguin=P2_1/n2_1/n2/m
+XrayDensity=2.983
+Rphase=9.14%
+UNIT=NM
+A=0.59952+-0.00039
+B=0.65469+-0.00041
+C=0.34860+-0.00021
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=0.00512+-0.00033
+Atomic positions for phase CrCl258icsd19294270
+---------------------------------------------
+  2     0.0000  0.0000  0.0000     E=(CR+2(1.0000))
+  4     0.2739  0.3605  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li3YCl6164icsd29966None
+******************************************************
+SpacegroupNo=164
+HermannMauguin=P-32/m1
+XrayDensity=2.442
+Rphase=12.22%
+UNIT=NM
+A=1.12147+-0.00010
+C=0.603937+-0.000070
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0279773
+Atomic positions for phase Li3YCl6164icsd29966None
+---------------------------------------------
+  6     0.3410  0.0000  0.0000     E=(LI+1(0.6200))
+  6     0.3253  0.0000  0.5000     E=(LI+1(0.8800))
+  1     0.0000  0.0000  0.0000     E=(Y+3(1.0000))
+  2     0.3333  0.6667  0.0010     E=(Y+3(0.4341))
+  2     0.3333  0.6667  0.5015     E=(Y+3(0.5659))
+  6     0.8865 -0.8865  0.2353     E=(CL-1(1.0000))
+  6     0.7800 -0.7800  0.7415     E=(CL-1(1.0000))
+  6     0.5530 -0.5530  0.2495     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=1.938
+Rphase=15.55%
+UNIT=NM
+A=0.525677+-0.000059
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00951585
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))

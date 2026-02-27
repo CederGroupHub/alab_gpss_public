@@ -1,0 +1,73 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 254 peaks, 70 parameters
+Start: Thu Feb 26 15:17:45 2026; End: Thu Feb 26 15:17:51 2026
+60 iteration steps
+
+Rp=4.77%  Rpb=64.21%  R=5.36%  Rwp=6.06% Rexp=3.45%
+Durbin-Watson d=0.75
+1-rho=19.7%
+
+Global parameters and GOALs
+****************************
+QLi2CrCl412icsd40303550=0.5858+-0.0065
+QCrCl258icsd19294270=0.2100+-0.0066
+QLiCl225icsd269090=0.2042+-0.0039
+EPS2=-0.000281+-0.000025
+
+Local parameters and GOALs for phase Li2CrCl412icsd40303550
+******************************************************
+SpacegroupNo=12
+HermannMauguin=C12/m1
+XrayDensity=2.409
+Rphase=7.52%
+UNIT=NM
+A=0.743996+-0.000078
+B=1.019238+-0.000091
+C=0.379014+-0.000043
+BETA=94.9936+-0.0074
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0210959
+Atomic positions for phase Li2CrCl412icsd40303550
+---------------------------------------------
+  4     0.2500  0.2500  0.5000     E=(LI+1(1.0000))
+  2     0.0000  0.0000  0.0000     E=(CR+2(1.0000))
+  4     0.7580  0.0000  0.5250     E=(CL-1(1.0000))
+  4     0.0000  0.2340  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase CrCl258icsd19294270
+******************************************************
+SpacegroupNo=58
+HermannMauguin=P2_1/n2_1/n2/m
+XrayDensity=2.943
+Rphase=7.11%
+UNIT=NM
+A=0.59911+-0.00014
+B=0.66283+-0.00015
+C=0.349218+-0.000069
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00756209
+Atomic positions for phase CrCl258icsd19294270
+---------------------------------------------
+  2     0.0000  0.0000  0.0000     E=(CR+2(1.0000))
+  4     0.2739  0.3605  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.054
+Rphase=9.13%
+UNIT=NM
+A=0.515573+-0.000036
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00735133
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))

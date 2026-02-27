@@ -1,0 +1,79 @@
+(C) 2022 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
+data_27500-ICSD
+_database_code_ICSD 27500
+_audit_creation_date 1980-01-01
+_audit_update_record 2012-08-01
+_chemical_name_common 'Iron(III) chloride'
+_chemical_formula_structural 'Fe Cl3'
+_chemical_formula_sum 'Cl3 Fe1'
+_chemical_name_structure_type BiI3#α−TiCl3#FeCl3
+_chemical_name_mineral Molysite
+_exptl_crystal_density_diffrn 2.91
+_diffrn_ambient_temperature 4.2
+_citation_title 'Neutron-diffraction study of antiferromagnetic Fe Cl3'
+loop_
+_citation_id
+_citation_journal_full
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary 'Physical Review' 1962 127 714 717 PHRVAO
+loop_
+_citation_author_citation_id
+_citation_author_name
+primary 'Cable, J.W.'
+primary 'Wilkinson, M.K.'
+primary 'Wollan, E.O.'
+primary 'Koehler, W.C.'
+_cell_length_a 6.065
+_cell_length_b 6.065
+_cell_length_c 17.43999
+_cell_angle_alpha 90.
+_cell_angle_beta 90.
+_cell_angle_gamma 120.
+_cell_volume 555.57
+_cell_formula_units_Z 6
+_space_group_name_H-M_alt 'R -3 H'
+_space_group_IT_number 148
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 'x-y, x, -z'
+2 'y, -x+y, -z'
+3 '-x, -y, -z'
+4 '-x+y, -x, z'
+5 '-y, x-y, z'
+6 'x, y, z'
+7 'x-y+2/3, x+1/3, -z+1/3'
+8 'y+2/3, -x+y+1/3, -z+1/3'
+9 '-x+2/3, -y+1/3, -z+1/3'
+10 '-x+y+2/3, -x+1/3, z+1/3'
+11 '-y+2/3, x-y+1/3, z+1/3'
+12 'x+2/3, y+1/3, z+1/3'
+13 'x-y+1/3, x+2/3, -z+2/3'
+14 'y+1/3, -x+y+2/3, -z+2/3'
+15 '-x+1/3, -y+2/3, -z+2/3'
+16 '-x+y+1/3, -x+2/3, z+2/3'
+17 '-y+1/3, x-y+2/3, z+2/3'
+18 'x+1/3, y+2/3, z+2/3'
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+Fe3+ 3
+Cl1- -1
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_B_iso_or_equiv
+_atom_site_occupancy
+Fe1 Fe3+ 6 c 0 0 0.3333 . 1.
+Cl1 Cl1- 18 f 0.653 0 0.076 . 1.
+#End of TTdata_27500-ICSD
+#

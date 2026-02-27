@@ -1,0 +1,54 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 238 peaks, 41 parameters
+Start: Thu Feb 26 14:54:51 2026; End: Thu Feb 26 14:54:57 2026
+62 iteration steps
+
+Rp=3.17%  Rpb=41.57%  R=4.48%  Rwp=4.20% Rexp=2.23%
+Durbin-Watson d=0.58
+1-rho=5.56%
+
+Global parameters and GOALs
+****************************
+QCrCl3=0.0729+-0.0019
+Qspinel=0.9271+-0.0019
+EPS2=-0.003411+-0.000025
+
+Local parameters and GOALs for phase CrCl3
+******************************************************
+SpacegroupNo=12
+HermannMauguin=C12/m1
+XrayDensity=2.913
+Rphase=6.05%
+UNIT=NM
+A=0.60050+-0.00030
+B=1.03687+-0.00044
+C=0.611153+-0.000099
+BETA=108.437+-0.019
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR2, MeanValue(GEWICHT)=0.0109741
+Atomic positions for phase CrCl3
+---------------------------------------------
+  4     0.0000  0.1667  0.0000     E=(CR+3(1.0000))
+  4     0.7795  0.0000  0.7684     E=(CL-1(1.0000))
+  8     0.2488  0.8231  0.7711     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.486
+Rphase=6.48%
+UNIT=NM
+A=1.032702+-0.000066
+k1=0.0100000
+B1=0.02218+-0.00018
+GrainSize(1,1,1)=18.98+-0.16
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.139603
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1500))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4500))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.3750),CR(0.2500),FE(0.2500))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))

@@ -1,0 +1,69 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 95 peaks, 57 parameters
+Start: Thu Feb 26 15:13:47 2026; End: Thu Feb 26 15:13:51 2026
+60 iteration steps
+
+Rp=5.13%  Rpb=62.41%  R=6.70%  Rwp=7.07% Rexp=3.37%
+Durbin-Watson d=0.52
+1-rho=15.0%
+
+Global parameters and GOALs
+****************************
+QMnCl2166icsd337520=0.0598+-0.0031
+Qspinel=0.7824+-0.0044
+QLiCl225icsd269090=0.1578+-0.0040
+EPS2=0.000724+-0.000028
+
+Local parameters and GOALs for phase MnCl2166icsd337520
+******************************************************
+SpacegroupNo=166
+HermannMauguin=R-32/m
+XrayDensity=3.093
+Rphase=7.33%
+UNIT=NM
+A=0.36356+-0.00020
+C=1.77042+-0.00033
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR2, MeanValue(GEWICHT)=0.00279239
+Atomic positions for phase MnCl2166icsd337520
+---------------------------------------------
+  3     0.0000  0.0000  0.0000     E=(MN+2(1.0000))
+  6     0.0000  0.0000  0.2545     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.473
+Rphase=12.74%
+UNIT=NM
+A=1.043515+-0.000069
+k1=0.0100000
+B1=0.01174+-0.00024
+GrainSize(1,1,1)=35.87+-0.73
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0365316
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.2000))
+  8     0.5000  0.5000  0.5000     E=(LI(0.6000))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.5000),FE(0.5000))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.054
+Rphase=11.03%
+UNIT=NM
+A=0.515573+-0.000042
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00736903
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))

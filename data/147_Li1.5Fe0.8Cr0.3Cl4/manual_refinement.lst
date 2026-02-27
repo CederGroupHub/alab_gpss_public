@@ -1,0 +1,32 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 45 peaks, 29 parameters
+Start: Thu Feb 26 14:55:42 2026; End: Thu Feb 26 14:55:43 2026
+31 iteration steps
+
+Rp=3.80%  Rpb=69.74%  R=4.91%  Rwp=4.76% Rexp=3.02%
+Durbin-Watson d=0.86
+1-rho=26.2%
+
+Global parameters and GOALs
+****************************
+Qspinel=1.00000
+EPS2=-0.00400+-0.00013
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.537
+Rphase=5.74%
+UNIT=NM
+A=1.03614+-0.00031
+k1=0.0100000
+B1=0.04449+-0.00087
+GrainSize(1,1,1)=9.46+-0.19
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0414748
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1500))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4500))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.3750),CR(0.1500),FE(0.4000))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))

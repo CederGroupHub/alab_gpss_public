@@ -1,0 +1,69 @@
+(C) 2022 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
+data_192942-ICSD
+_database_code_ICSD 192942
+_audit_creation_date 2015-02-01
+_chemical_name_common 'Chromium dichloride'
+_chemical_formula_structural 'Cr Cl2'
+_chemical_formula_sum 'Cl2 Cr1'
+_chemical_name_structure_type CaCl2
+_exptl_crystal_density_diffrn 2.95
+_diffrn_ambient_temperature 293.
+_citation_title
+'On the formation mechanism of chromium nitrides: an in situ study'
+loop_
+_citation_id
+_citation_journal_full
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary 'Zeitschrift fuer Anorganische und Allgemeine Chemie (1950) (DE)' 2014
+640 2801 2808 ZAACAB
+loop_
+_citation_author_citation_id
+_citation_author_name
+primary 'Widenmeyer, Marc'
+primary 'Meissner, Elke'
+primary 'Senyshyn, Anatoliy'
+primary 'Niewa, Rainer'
+_cell_length_a 6.6331(2)
+_cell_length_b 5.9752(2)
+_cell_length_c 3.4863(1)
+_cell_angle_alpha 90.
+_cell_angle_beta 90.
+_cell_angle_gamma 90.
+_cell_volume 138.18
+_cell_formula_units_Z 2
+_space_group_name_H-M_alt 'P n n m'
+_space_group_IT_number 58
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 'x+1/2, -y+1/2, z+1/2'
+2 '-x+1/2, y+1/2, z+1/2'
+3 'x, y, -z'
+4 '-x, -y, -z'
+5 '-x+1/2, y+1/2, -z+1/2'
+6 'x+1/2, -y+1/2, -z+1/2'
+7 '-x, -y, z'
+8 'x, y, z'
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+Cr2+ 2
+Cl1- -1
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_B_iso_or_equiv
+_atom_site_occupancy
+Cr1 Cr2+ 2 a 0 0 0 1.05(7) 1.
+Cl1 Cl1- 4 g 0.3605(2) 0.2739(2) 0 1.26(3) 1.
+#End of TTdata_192942-ICSD
+#

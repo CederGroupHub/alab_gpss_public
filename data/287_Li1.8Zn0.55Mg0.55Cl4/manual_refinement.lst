@@ -1,0 +1,74 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 385 peaks, 67 parameters
+Start: Thu Feb 26 15:16:10 2026; End: Thu Feb 26 15:16:25 2026
+121 iteration steps
+
+Rp=5.93%  Rpb=58.06%  R=7.51%  Rwp=8.26% Rexp=3.61%
+Durbin-Watson d=0.44
+1-rho=14.9%
+
+Global parameters and GOALs
+****************************
+Qspinel=0.5706+-0.0060
+QLiCl225icsd269090=0.1907+-0.0046
+QLi2ZnCl462icsd732222=0.2387+-0.0044
+EPS2=0.000759+-0.000023
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.394
+Rphase=15.88%
+UNIT=NM
+A=1.041490+-0.000045
+k1=0.0100000
+B1=0.00672+-0.00021
+GrainSize(1,1,1)=62.7+-1.9
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0329530
+Atomic positions for phase spinel
+---------------------------------------------
+  8     0.5000  0.5000  0.5000     E=(LI(0.5400))
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1800))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.4500),MG(0.2750),ZN(0.2750))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.032
+Rphase=15.52%
+UNIT=NM
+A=0.517482+-0.000030
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0110124
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li2ZnCl462icsd732222
+******************************************************
+SpacegroupNo=62
+HermannMauguin=P2_1/n2_1/m2_1/a
+XrayDensity=2.523
+Rphase=7.87%
+UNIT=NM
+A=1.28109+-0.00020
+B=0.74354+-0.00021
+C=0.611051+-0.000093
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0137864
+Atomic positions for phase Li2ZnCl462icsd732222
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.7692  0.2500  0.5136     E=(LI+1(1.0000))
+  4     0.5902  0.2500  0.0826     E=(ZN+2(1.0000))
+  4     0.5916  0.2500  0.7172     E=(CL-1(1.0000))
+  4     0.9271  0.2500  0.2577     E=(CL-1(1.0000))
+  8     0.6672  0.0067  0.2478     E=(CL-1(1.0000))

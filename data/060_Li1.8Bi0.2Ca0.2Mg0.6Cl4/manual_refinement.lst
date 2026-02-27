@@ -1,0 +1,71 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 186 peaks, 59 parameters
+Start: Thu Feb 26 15:11:56 2026; End: Thu Feb 26 15:12:04 2026
+122 iteration steps
+
+Rp=7.61%  Rpb=57.61%  R=11.76%  Rwp=11.41% Rexp=3.33%
+Durbin-Watson d=0.20
+1-rho=17.0%
+
+Global parameters and GOALs
+****************************
+QCaCl2=0.1336+-0.0038
+Qspinel=0.6276+-0.0053
+QMgCl2166icsd261570=0.2388+-0.0041
+EPS2=-0.000401+-0.000031
+
+Local parameters and GOALs for phase CaCl2
+******************************************************
+SpacegroupNo=58
+HermannMauguin=P2_1/n2_1/n2/m
+XrayDensity=2.243
+Rphase=22.95%
+UNIT=NM
+A=0.63015+-0.00019
+B=0.64090+-0.00018
+C=0.406876+-0.000062
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR2, MeanValue(GEWICHT)=0.0140095
+Atomic positions for phase CaCl2
+---------------------------------------------
+  2     0.0000  0.0000  0.0000     E=(CA+2(1.0000))
+  4     0.2822  0.3249  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.553
+Rphase=16.51%
+UNIT=NM
+A=1.043941+-0.000074
+k1=0.0100000
+B1=0.01423+-0.00030
+GrainSize(1,1,1)=29.59+-0.63
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0658334
+Atomic positions for phase spinel
+---------------------------------------------
+  8     0.5000  0.5000  0.5000     E=(LI(0.5400))
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1800))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.4500),CA(0.1000),MG(0.3000),BI(0.1000))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase MgCl2166icsd261570
+******************************************************
+SpacegroupNo=166
+HermannMauguin=R-32/m
+XrayDensity=2.321
+Rphase=21.70%
+UNIT=NM
+A=0.364515+-0.000026
+C=1.77623+-0.00053
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0250476
+Atomic positions for phase MgCl2166icsd261570
+---------------------------------------------
+  3     0.0000  0.0000  0.0000     E=(MG+2(1.0000))
+  6     0.0000  0.0000  0.2730     E=(CL-1(1.0000))

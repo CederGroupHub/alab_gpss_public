@@ -1,0 +1,55 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 222 peaks, 49 parameters
+Start: Thu Feb 26 14:49:29 2026; End: Thu Feb 26 14:49:33 2026
+54 iteration steps
+
+Rp=3.11%  Rpb=56.41%  R=4.66%  Rwp=4.27% Rexp=2.27%
+Durbin-Watson d=0.58
+1-rho=9.12%
+
+Global parameters and GOALs
+****************************
+QLi6FeCl8225icsd7321731=0.3548+-0.0037
+QLi2FeCl474icsd20251921=0.6452+-0.0037
+EPS2=-0.000101+-0.000021
+
+Local parameters and GOALs for phase Li6FeCl8225icsd7321731
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.314
+Rphase=5.80%
+UNIT=NM
+A=1.030412+-0.000054
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0269420
+Atomic positions for phase Li6FeCl8225icsd7321731
+---------------------------------------------
+ 24     0.0000  0.2500  0.2500     E=(LI+1(1.0000))
+  4     0.0000  0.0000  0.0000     E=(FE+2(1.0000))
+  8     0.2500  0.2500  0.2500     E=(CL-1(1.0000))
+ 24     0.2410  0.0000  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li2FeCl474icsd20251921
+******************************************************
+SpacegroupNo=74
+HermannMauguin=I2_1/m2_1/m2_1/a
+XrayDensity=2.499
+Rphase=4.87%
+UNIT=NM
+A=0.735103+-0.000094
+B=0.737197+-0.000086
+C=1.037636+-0.000071
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0489876
+Atomic positions for phase Li2FeCl474icsd20251921
+---------------------------------------------
+  8     0.8540  0.2500  0.1960     E=(LI+1(0.5000))
+  4     0.0000  0.0000  0.5000     E=(LI+1(0.8800),FE+2(0.1200))
+  4     0.2500  0.2500  0.7500     E=(LI+1(0.1200),FE+2(0.8800))
+  8     0.0000  0.4850  0.7550     E=(CL-1(1.0000))
+  8     0.7490  0.2500  0.9950     E=(CL-1(1.0000))

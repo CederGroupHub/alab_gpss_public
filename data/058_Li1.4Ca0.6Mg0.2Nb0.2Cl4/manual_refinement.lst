@@ -1,0 +1,69 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 154 peaks, 67 parameters
+Start: Thu Feb 26 14:48:17 2026; End: Thu Feb 26 14:48:23 2026
+43 iteration steps
+
+Rp=6.19%  Rpb=37.31%  R=7.47%  Rwp=8.16% Rexp=3.34%
+Durbin-Watson d=0.38
+1-rho=5.92%
+
+Global parameters and GOALs
+****************************
+QCaCl258icsd2464160=0.4168+-0.0022
+QLiCl225icsd269090=0.3460+-0.0019
+QLi1352Mg928Cl32227icsd409001None=0.2372+-0.0019
+EPS2=-0.000111+-0.000010
+
+Local parameters and GOALs for phase CaCl258icsd2464160
+******************************************************
+SpacegroupNo=58
+HermannMauguin=P2_1/n2_1/n2/m
+XrayDensity=2.196
+Rphase=6.94%
+UNIT=NM
+A=0.625759+-0.000033
+B=0.643914+-0.000034
+C=0.416503+-0.000020
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0574091
+Atomic positions for phase CaCl258icsd2464160
+---------------------------------------------
+  2     0.0000  0.0000  0.0000     E=(CA+2(1.0000))
+  4     0.2822  0.3249  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.064
+Rphase=13.31%
+UNIT=NM
+A=0.514767+-0.000012
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0476479
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li1352Mg928Cl32227icsd409001None
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.125
+Rphase=11.39%
+UNIT=NM
+A=1.043399+-0.000029
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0326656
+Atomic positions for phase Li1352Mg928Cl32227icsd409001None
+---------------------------------------------
+  8     0.5000  0.5000  0.5000     E=(LI+1(0.8500))
+ 16     0.1250  0.1250  0.1250     E=(LI+1(0.4200),MG+2(0.5800))
+ 32     0.8822  0.8822  0.8822     E=(CL-1(1.0000))

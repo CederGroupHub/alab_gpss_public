@@ -1,0 +1,69 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 127 peaks, 57 parameters
+Start: Thu Feb 26 15:10:16 2026; End: Thu Feb 26 15:10:19 2026
+32 iteration steps
+
+Rp=3.04%  Rpb=55.37%  R=3.96%  Rwp=3.97% Rexp=2.66%
+Durbin-Watson d=0.93
+1-rho=14.8%
+
+Global parameters and GOALs
+****************************
+QMnCl2166icsd337520=0.0327+-0.0035
+Qspinel=0.9360+-0.0054
+QFe84Cl32227icsd95639None=0.0313+-0.0040
+EPS2=-0.004553+-0.000079
+
+Local parameters and GOALs for phase MnCl2166icsd337520
+******************************************************
+SpacegroupNo=166
+HermannMauguin=R-32/m
+XrayDensity=2.993
+Rphase=5.75%
+UNIT=NM
+A=0.371300+-0.000087
+C=1.75433+-0.00084
+k1=0.0100000
+B1=0.00237+-0.00092
+GrainSize(1,1,1)=178+-69
+GEWICHT=SPHAR2, MeanValue(GEWICHT)=0.00223077
+Atomic positions for phase MnCl2166icsd337520
+---------------------------------------------
+  3     0.0000  0.0000  0.0000     E=(MN+2(1.0000))
+  6     0.0000  0.0000  0.2545     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.601
+Rphase=5.48%
+UNIT=NM
+A=1.04242+-0.00021
+k1=0.0100000
+B1=0.04854+-0.00076
+GrainSize(1,1,1)=8.67+-0.14
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0638110
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1700))
+  8     0.5000  0.5000  0.5000     E=(LI(0.5100))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.4250),TA(0.0500),MN(0.1000),FE(0.3500))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase Fe84Cl32227icsd95639None
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.435
+Rphase=3.62%
+UNIT=NM
+A=1.03025+-0.00027
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00213153
+Atomic positions for phase Fe84Cl32227icsd95639None
+---------------------------------------------
+ 16     0.1250  0.1250  0.1250     E=(FE+2(0.5250))
+ 32     0.8808  0.8808  0.8808     E=(CL-1(1.0000))

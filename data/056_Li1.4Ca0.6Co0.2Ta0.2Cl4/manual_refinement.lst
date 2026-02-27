@@ -1,0 +1,52 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 147 peaks, 49 parameters
+Start: Thu Feb 26 14:48:15 2026; End: Thu Feb 26 14:48:17 2026
+24 iteration steps
+
+Rp=3.73%  Rpb=54.10%  R=5.13%  Rwp=4.95% Rexp=2.50%
+Durbin-Watson d=0.53
+1-rho=11.4%
+
+Global parameters and GOALs
+****************************
+QCaCl258icsd2464160=0.3494+-0.0040
+Qspinel=0.6506+-0.0040
+EPS2=-0.000631+-0.000023
+
+Local parameters and GOALs for phase CaCl258icsd2464160
+******************************************************
+SpacegroupNo=58
+HermannMauguin=P2_1/n2_1/n2/m
+XrayDensity=2.191
+Rphase=6.49%
+UNIT=NM
+A=0.626739+-0.000074
+B=0.643569+-0.000074
+C=0.417007+-0.000047
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0297505
+Atomic positions for phase CaCl258icsd2464160
+---------------------------------------------
+  2     0.0000  0.0000  0.0000     E=(CA+2(1.0000))
+  4     0.2822  0.3249  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.741
+Rphase=6.59%
+UNIT=NM
+A=1.027016+-0.000061
+k1=0.0100000
+B1=0.01130+-0.00019
+GrainSize(1,1,1)=37.24+-0.62
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0553866
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1400))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4200))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.3500),CA(0.3000),TA(0.1000),CO(0.1000))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))

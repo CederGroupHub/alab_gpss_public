@@ -1,0 +1,71 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 138 peaks, 51 parameters
+Start: Thu Feb 26 15:11:03 2026; End: Thu Feb 26 15:11:04 2026
+23 iteration steps
+
+Rp=4.57%  Rpb=44.29%  R=7.64%  Rwp=6.84% Rexp=2.82%
+Durbin-Watson d=0.35
+1-rho=9.52%
+
+Global parameters and GOALs
+****************************
+QLi128Mn96Cl32227icsd74872None=0.2347+-0.0051
+QLi10352V9648Cl32216icsd50006None=0
+Qspinel=0.7653+-0.0051
+EPS2=-0.004907+-0.000028
+
+Local parameters and GOALs for phase Li128Mn96Cl32227icsd74872None
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.517
+Rphase=7.88%
+UNIT=NM
+A=1.049151+-0.000069
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0307391
+Atomic positions for phase Li128Mn96Cl32227icsd74872None
+---------------------------------------------
+  8     0.5000  0.5000  0.5000     E=(LI+1(0.8000))
+ 16     0.1250  0.1250  0.1250     E=(LI+1(0.4000),MN+2(0.6000))
+ 32     0.8820  0.8820  0.8820     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li10352V9648Cl32216icsd50006None
+******************************************************
+SpacegroupNo=216
+HermannMauguin=F-43m
+XrayDensity=2.534
+Rphase=100.00%
+UNIT=NM
+A=UNDEF
+k1=UNDEF
+B1=UNDEF
+GrainSize(1,1,1)=UNDEF
+GEWICHT=0.0
+Atomic positions for phase Li10352V9648Cl32216icsd50006None
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+ 16     0.6259  0.6259  0.6259     E=(LI+1(0.3970),V(0.6030))
+ 16     0.3822  0.3822  0.3822     E=(CL-1(1.0000))
+ 16     0.8686  0.8686  0.8686     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.420
+Rphase=11.48%
+UNIT=NM
+A=1.05450+-0.00014
+k1=0.0100000
+B1=0.03952+-0.00061
+GrainSize(1,1,1)=10.65+-0.16
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.100212
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1700))
+  8     0.5000  0.5000  0.5000     E=(LI(0.5100))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.4250),MN(0.5000),V(0.0500))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))

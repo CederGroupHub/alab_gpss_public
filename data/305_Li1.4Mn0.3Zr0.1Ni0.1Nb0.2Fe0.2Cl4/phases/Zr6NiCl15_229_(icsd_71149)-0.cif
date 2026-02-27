@@ -1,0 +1,174 @@
+(C) 2022 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
+data_71149-ICSD
+_database_code_ICSD 71149
+_audit_creation_date 1993-01-06
+_audit_update_record 2010-08-01
+_chemical_name_common 'Hexazirconium(II) nickel(III) chloride'
+_chemical_formula_structural 'Zr6 Ni Cl15'
+_chemical_formula_sum 'Cl15 Ni1 Zr6'
+_chemical_name_structure_type NiZr6Cl15
+_exptl_crystal_density_diffrn 3.57
+_citation_title
+
+;
+Zirconium chloride cluster phases centered by transition metals Mn-Ni.
+Examples of the Nb6 F15 structure
+;
+loop_
+_citation_id
+_citation_journal_full
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary 'Inorganic Chemistry' 1991 30 431 435 INOCAJ
+loop_
+_citation_author_citation_id
+_citation_author_name
+primary 'Zhang, J.'
+primary 'Corbett, J.D.'
+_cell_length_a 10.1907(4)
+_cell_length_b 10.1907(4)
+_cell_length_c 10.1907(4)
+_cell_angle_alpha 90.
+_cell_angle_beta 90.
+_cell_angle_gamma 90.
+_cell_volume 1058.31
+_cell_formula_units_Z 2
+_space_group_name_H-M_alt 'I m -3 m'
+_space_group_IT_number 229
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 'z, y, -x'
+2 'y, x, -z'
+3 'x, z, -y'
+4 'z, x, -y'
+5 'y, z, -x'
+6 'x, y, -z'
+7 'z, -y, x'
+8 'y, -x, z'
+9 'x, -z, y'
+10 'z, -x, y'
+11 'y, -z, x'
+12 'x, -y, z'
+13 '-z, y, x'
+14 '-y, x, z'
+15 '-x, z, y'
+16 '-z, x, y'
+17 '-y, z, x'
+18 '-x, y, z'
+19 '-z, -y, -x'
+20 '-y, -x, -z'
+21 '-x, -z, -y'
+22 '-z, -x, -y'
+23 '-y, -z, -x'
+24 '-x, -y, -z'
+25 '-z, -y, x'
+26 '-y, -x, z'
+27 '-x, -z, y'
+28 '-z, -x, y'
+29 '-y, -z, x'
+30 '-x, -y, z'
+31 '-z, y, -x'
+32 '-y, x, -z'
+33 '-x, z, -y'
+34 '-z, x, -y'
+35 '-y, z, -x'
+36 '-x, y, -z'
+37 'z, -y, -x'
+38 'y, -x, -z'
+39 'x, -z, -y'
+40 'z, -x, -y'
+41 'y, -z, -x'
+42 'x, -y, -z'
+43 'z, y, x'
+44 'y, x, z'
+45 'x, z, y'
+46 'z, x, y'
+47 'y, z, x'
+48 'x, y, z'
+49 'z+1/2, y+1/2, -x+1/2'
+50 'y+1/2, x+1/2, -z+1/2'
+51 'x+1/2, z+1/2, -y+1/2'
+52 'z+1/2, x+1/2, -y+1/2'
+53 'y+1/2, z+1/2, -x+1/2'
+54 'x+1/2, y+1/2, -z+1/2'
+55 'z+1/2, -y+1/2, x+1/2'
+56 'y+1/2, -x+1/2, z+1/2'
+57 'x+1/2, -z+1/2, y+1/2'
+58 'z+1/2, -x+1/2, y+1/2'
+59 'y+1/2, -z+1/2, x+1/2'
+60 'x+1/2, -y+1/2, z+1/2'
+61 '-z+1/2, y+1/2, x+1/2'
+62 '-y+1/2, x+1/2, z+1/2'
+63 '-x+1/2, z+1/2, y+1/2'
+64 '-z+1/2, x+1/2, y+1/2'
+65 '-y+1/2, z+1/2, x+1/2'
+66 '-x+1/2, y+1/2, z+1/2'
+67 '-z+1/2, -y+1/2, -x+1/2'
+68 '-y+1/2, -x+1/2, -z+1/2'
+69 '-x+1/2, -z+1/2, -y+1/2'
+70 '-z+1/2, -x+1/2, -y+1/2'
+71 '-y+1/2, -z+1/2, -x+1/2'
+72 '-x+1/2, -y+1/2, -z+1/2'
+73 '-z+1/2, -y+1/2, x+1/2'
+74 '-y+1/2, -x+1/2, z+1/2'
+75 '-x+1/2, -z+1/2, y+1/2'
+76 '-z+1/2, -x+1/2, y+1/2'
+77 '-y+1/2, -z+1/2, x+1/2'
+78 '-x+1/2, -y+1/2, z+1/2'
+79 '-z+1/2, y+1/2, -x+1/2'
+80 '-y+1/2, x+1/2, -z+1/2'
+81 '-x+1/2, z+1/2, -y+1/2'
+82 '-z+1/2, x+1/2, -y+1/2'
+83 '-y+1/2, z+1/2, -x+1/2'
+84 '-x+1/2, y+1/2, -z+1/2'
+85 'z+1/2, -y+1/2, -x+1/2'
+86 'y+1/2, -x+1/2, -z+1/2'
+87 'x+1/2, -z+1/2, -y+1/2'
+88 'z+1/2, -x+1/2, -y+1/2'
+89 'y+1/2, -z+1/2, -x+1/2'
+90 'x+1/2, -y+1/2, -z+1/2'
+91 'z+1/2, y+1/2, x+1/2'
+92 'y+1/2, x+1/2, z+1/2'
+93 'x+1/2, z+1/2, y+1/2'
+94 'z+1/2, x+1/2, y+1/2'
+95 'y+1/2, z+1/2, x+1/2'
+96 'x+1/2, y+1/2, z+1/2'
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+Zr2+ 2
+Cl1- -1
+Ni3+ 3
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_B_iso_or_equiv
+_atom_site_occupancy
+Zr1 Zr2+ 12 e 0.2413(1) 0 0 . 1.
+Cl1 Cl1- 24 h 0 0.2485(1) 0.2485(1) . 1.
+Cl2 Cl1- 6 b 0 0.5 0.5 . 1.
+Ni1 Ni3+ 2 a 0 0 0 . 1.
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_type_symbol
+_atom_site_aniso_B_11
+_atom_site_aniso_B_22
+_atom_site_aniso_B_33
+_atom_site_aniso_B_12
+_atom_site_aniso_B_13
+_atom_site_aniso_B_23
+Zr1 Zr2+ 0.66(3) 0.72(2) 0.72(2) 0 0 0
+Cl1 Cl1- 1.57(7) 0.79(4) 0.79(4) 0 0 -.25(6)
+Cl2 Cl1- 0.6(1) 1.92(9) 1.92(9) 0 0 0
+Ni1 Ni3+ 1.14(6) 1.14(6) 1.14(6) 0 0 0
+#End of TTdata_71149-ICSD
+#

@@ -1,0 +1,56 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 308 peaks, 35 parameters
+Start: Thu Feb 26 14:51:01 2026; End: Thu Feb 26 14:51:05 2026
+39 iteration steps
+
+Rp=6.07%  Rpb=70.31%  R=8.54%  Rwp=8.85% Rexp=3.18%
+Durbin-Watson d=0.32
+1-rho=23.7%
+
+Global parameters and GOALs
+****************************
+QLi3YCl6164icsd29966None=1.00000
+QMgCl2164icsd170631=0
+EPS2=0.000416+-0.000025
+
+Local parameters and GOALs for phase Li3YCl6164icsd29966None
+******************************************************
+SpacegroupNo=164
+HermannMauguin=P-32/m1
+XrayDensity=2.471
+Rphase=15.64%
+UNIT=NM
+A=1.117182+-0.000076
+C=0.601479+-0.000041
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0400554
+Atomic positions for phase Li3YCl6164icsd29966None
+---------------------------------------------
+  6     0.3410  0.0000  0.0000     E=(LI+1(0.6200))
+  6     0.3253  0.0000  0.5000     E=(LI+1(0.8800))
+  1     0.0000  0.0000  0.0000     E=(Y+3(1.0000))
+  2     0.3333  0.6667  0.0010     E=(Y+3(0.4341))
+  2     0.3333  0.6667  0.5015     E=(Y+3(0.5659))
+  6     0.8865 -0.8865  0.2353     E=(CL-1(1.0000))
+  6     0.7800 -0.7800  0.7415     E=(CL-1(1.0000))
+  6     0.5530 -0.5530  0.2495     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase MgCl2164icsd170631
+******************************************************
+SpacegroupNo=164
+HermannMauguin=P-32/m1
+XrayDensity=2.358
+Rphase=100.00%
+UNIT=NM
+A=UNDEF
+C=UNDEF
+k1=UNDEF
+B1=UNDEF
+GrainSize(1,1,1)=UNDEF
+GEWICHT=0.0
+Atomic positions for phase MgCl2164icsd170631
+---------------------------------------------
+  1     0.0000  0.0000  0.0000     E=(MG+2(1.0000))
+  2     0.3333  0.6667  0.2300     E=(CL-1(1.0000))

@@ -1,0 +1,50 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 54 peaks, 47 parameters
+Start: Thu Feb 26 14:52:07 2026; End: Thu Feb 26 14:52:08 2026
+26 iteration steps
+
+Rp=4.67%  Rpb=46.07%  R=8.94%  Rwp=6.67% Rexp=2.54%
+Durbin-Watson d=0.31
+1-rho=7.44%
+
+Global parameters and GOALs
+****************************
+Qspinel=0.9144+-0.0022
+QLiCl225icsd269090=0.0856+-0.0022
+EPS2=-0.000210+-0.000014
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.655
+Rphase=11.89%
+UNIT=NM
+A=1.050418+-0.000035
+k1=0
+B1=0.00827+-0.00013
+GrainSize(1,1,1)=51.32+-0.81
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.122706
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1400))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4200))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.3500),TA(0.1000),MN(0.4000))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.063
+Rphase=7.55%
+UNIT=NM
+A=0.514885+-0.000043
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0114857
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))

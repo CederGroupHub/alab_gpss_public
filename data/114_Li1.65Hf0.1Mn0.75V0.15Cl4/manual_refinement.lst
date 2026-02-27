@@ -1,0 +1,88 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 218 peaks, 71 parameters
+Start: Thu Feb 26 15:01:34 2026; End: Thu Feb 26 15:02:00 2026
+275 iteration steps
+
+Rp=4.18%  Rpb=50.64%  R=5.00%  Rwp=5.38% Rexp=3.05%
+Durbin-Watson d=0.71
+1-rho=8.86%
+
+Global parameters and GOALs
+****************************
+QVCl3=0.0916+-0.0022
+QMnCl2166icsd337520=0.0658+-0.0037
+Qspinel=0.7351+-0.0045
+QLiCl225icsd269090=0.1075+-0.0024
+EPS2=-0.000039+-0.000019
+
+Local parameters and GOALs for phase VCl3
+******************************************************
+SpacegroupNo=148
+HermannMauguin=R-3
+XrayDensity=2.679
+Rphase=10.71%
+UNIT=NM
+A=0.631260
+C=1.69528+-0.00034
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=0.00634+-0.00016
+Atomic positions for phase VCl3
+---------------------------------------------
+  6     0.0000  0.0000  0.3333     E=(V+3(1.0000))
+ 18     0.3333  0.3333  0.2553     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase MnCl2166icsd337520
+******************************************************
+SpacegroupNo=166
+HermannMauguin=R-32/m
+XrayDensity=3.010
+Rphase=5.13%
+UNIT=NM
+A=0.370316+-0.000077
+C=1.75388+-0.00034
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00455773
+Atomic positions for phase MnCl2166icsd337520
+---------------------------------------------
+  3     0.0000  0.0000  0.0000     E=(MN+2(1.0000))
+  6     0.0000  0.0000  0.2545     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.533
+Rphase=6.80%
+UNIT=NM
+A=1.048779+-0.000049
+k1=0.0100000
+B1=0.01081+-0.00016
+GrainSize(1,1,1)=38.95+-0.56
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0509007
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1650))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4950))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.4125),HF(0.0500),MN(0.3750),V(0.0750))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase LiCl225icsd269090
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.060
+Rphase=4.78%
+UNIT=NM
+A=0.515109+-0.000039
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00744103
+Atomic positions for phase LiCl225icsd269090
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))

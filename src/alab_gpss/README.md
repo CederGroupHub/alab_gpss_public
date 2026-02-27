@@ -1,105 +1,137 @@
-# ALAB GPSS Control Panel
+# ALAB GPSS
 
-This is a user interface for managing the XRD sample holder rack, dosing head rack, and consumable rack in the ALAB GPSS system.
+Control and analysis code for the GPSS platform, including:
+- hardware device/task orchestration (`alab_gpss.system`)
+- FastAPI backend + React UI (`alab_gpss.backend`, `alab_gpss/ui`)
+- experimental data analysis workflows (`scripts/`)
+- support daemons for scanner/light/caliper integrations (`src/daemon/`)
 
-## Features
+## Repository Layout
 
-- View and manage XRD sample holders
-- View and manage dosing heads
-- View and manage consumable rack slots
-- Update status of various components
-
-## Project Structure
-
-- `backend/`: FastAPI backend
-  - `app.py`: Main FastAPI application
-  - `routers/`: API routers for each device
-  - `server.py`: Server script to run the FastAPI application
-- `ui/`: React frontend
-  - `src/`: Source code
-    - `api/`: API service for the frontend
-    - `components/`: React components
-    - `pages/`: Page components
-
-## Requirements
-
-### Backend
-
-- Python 3.8+
-- FastAPI
-- Uvicorn
-- alab_management
-
-### Frontend
-
-- Node.js 14+
-- npm or yarn
-
-## Installation
-
-### Backend
-
-1. Install the required Python packages:
-
-```bash
-pip install fastapi uvicorn
+```text
+src/
+  alab_gpss/
+    backend/                # FastAPI app + routers
+    system/                 # device wrappers and task definitions
+    experiment_design/      # chemistry/reaction helpers
+    ui/                     # React frontend
+  daemon/
+    gpss_qrcode_scanner/
+    gpss_height_caliper/
+    gpss_light_monitor/
+scripts/                    # analysis and AI workflow scripts
+data/                       # local dataset location (expected: data/dataset.json)
 ```
 
-2. Run the backend server:
+## Prerequisites
+
+- Python 3.10+
+- Node.js 18+ and npm (for UI development)
+- MongoDB reachable by the configured hosts
+- Optional: hardware/network access for GPSS devices and Aeris/BioLogic integrations
+
+## Python Setup
+
+From the repository root:
 
 ```bash
-cd alab-gpss/src/alab_gpss
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+If you use `uv`:
+
+```bash
+uv sync
+```
+
+## Configuration
+
+### AlabOS / infrastructure config
+
+An example config is provided at:
+- `src/alab_gpss/system/alabos_config_example.toml`
+
+You will need to set host/port/credentials for MongoDB, RabbitMQ, alarm channels, etc.
+
+### Device/network assumptions
+
+Current code includes hardcoded/internal addresses for many devices (robot arms, furnaces, BioLogic, Aeris, etc.).
+Review before deployment:
+- `src/alab_gpss/system/__init__.py`
+- `src/alab_gpss/backend/routers/ionic_conductivity.py`
+- `src/alab_gpss/backend/routers/xrd_sample_holder.py`
+
+### TLS certificates (optional)
+
+`backend/server.py` attempts to use:
+- `ssl_keys/aragorn-key.pem`
+- `ssl_keys/aragorn-cert.pem`
+
+If files are missing, the wrapper uses a fallback to run without SSL files.
+
+## Run Backend API
+
+```bash
 python -m alab_gpss.backend.server
 ```
 
-The backend server will be running at http://localhost:8000.
+Default bind:
+- host: `0.0.0.0`
+- port: `8000`
 
-### Frontend
+Main routers are mounted under:
+- `/api/dosing-head/`
+- `/api/consumable-rack/`
+- `/api/xrd-sample-holder/`
+- `/api/ionic-conductivity/`
 
-1. Install the required Node.js packages:
+## Run Frontend (dev)
 
 ```bash
-cd alab-gpss/src/alab_gpss/ui
+cd src/alab_gpss/ui
 npm install
-```
-
-2. Run the frontend development server:
-
-```bash
 npm start
 ```
 
-The frontend will be running at http://localhost:3000.
+The UI proxies API requests to `http://localhost:8000` (see `ui/package.json`).
 
-## Usage
+To build frontend assets:
 
-1. Open your browser and navigate to http://localhost:3000.
-2. Use the navigation bar to switch between different devices.
-3. For each device, you can:
-   - View the status of all slots
-   - Update the status of slots
-   - Perform specific actions based on the device type
+```bash
+npm run build
+```
 
-## API Documentation
+The backend serves built assets from `src/alab_gpss/ui/build/` when present.
 
-The API documentation is available at http://localhost:8000/docs when the backend server is running.
+## Analysis / Workflow Scripts
 
-## Testing the Frontend Without the Backend
+Main scripts in `scripts/`:
+- `analysis_workflow.py`: conductivity fitting + XRD phase extraction + DB update pipeline
+- `experiment_design.py`: agent-driven experiment design workflow utilities
+- `explore.py`: new material proposal workflow
+- `explore_bo.py`: Bayesian optimization + proposal generation
+- `find_abnormality.py`: abnormality detection workflow
+- `reflection.py`: reflection workflow for completed experiments
 
-The frontend can be tested without the backend by using the mock API functionality. This is useful for development and testing the UI independently of the backend.
+Most of these scripts expect a dataset at:
+- `data/dataset.json`
 
-### Using the Mock API
+And/or access to MongoDB instances used in the lab environment.
 
-1. The mock API is enabled by default through the `.env` file in the `ui` directory.
+## Daemons
 
-2. To disable the mock API and use the real backend, set `REACT_APP_USE_MOCK_API=false` in the `.env` file.
+- `src/daemon/gpss_qrcode_scanner/main.py`
+  - reads scanner input and posts measurement jobs to ionic conductivity API
+- `src/daemon/gpss_height_caliper/main.py`
+  - reads caliper values and updates sample height via API
+- `src/daemon/gpss_light_monitor/main.py`
+  - monitors/controls Govee lighting devices
 
-3. The mock API provides simulated data for all the endpoints, allowing you to test the UI functionality without the backend running.
+These daemons are environment-driven (API URLs, device hints, credentials), but include sensible defaults in code.
 
-### Mock Data
+## Notes
 
-The mock data includes:
-
-- XRD sample holder slots with various statuses (clean, loaded, in_use, disabled)
-- Dosing heads with different chemicals and statuses (normal, stuck, empty, in_use)
-- Consumable rack slots organized by level and row, with different statuses and consumable types 
+- `pyproject.toml` currently defines a console script entry `alab_gpss = alab_gpss.cli:cli`, but `src/alab_gpss/cli.py` is not present in this repository.
+- Some modules are tightly coupled to lab-specific infrastructure; local development may require stubbing or simulation mode.

@@ -1,0 +1,51 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 81 peaks, 48 parameters
+Start: Thu Feb 26 15:06:23 2026; End: Thu Feb 26 15:06:25 2026
+34 iteration steps
+
+Rp=2.39%  Rpb=54.49%  R=3.15%  Rwp=3.05% Rexp=2.12%
+Durbin-Watson d=1.04
+1-rho=8.07%
+
+Global parameters and GOALs
+****************************
+Qspinel=0.9563+-0.0029
+QNiCl2=0.0437+-0.0029
+EPS2=-0.003341+-0.000026
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.623
+Rphase=4.26%
+UNIT=NM
+A=1.034645+-0.000070
+k1=0.006+-0.040
+B1=0.01545+-0.00044
+GrainSize(1,1,1)=27.34+-0.35
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0728696
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1600))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4800))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.4000),MG(0.0500),FE(0.3000),CO(0.1000),CU(0.0500),NI(0.1000))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase NiCl2
+******************************************************
+SpacegroupNo=166
+HermannMauguin=R-32/m
+XrayDensity=3.424
+Rphase=3.40%
+UNIT=NM
+A=0.353784+-0.000098
+C=1.73980+-0.00066
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.00332921
+Atomic positions for phase NiCl2
+---------------------------------------------
+  3     0.0000  0.0000  0.0000     E=(NI+2(1.0000))
+  6     0.0000  0.0000  0.2551     E=(CL-1(1.0000))

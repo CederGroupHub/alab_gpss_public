@@ -1,0 +1,51 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 171 peaks, 48 parameters
+Start: Thu Feb 26 15:19:46 2026; End: Thu Feb 26 15:19:50 2026
+52 iteration steps
+
+Rp=10.87%  Rpb=58.65%  R=19.56%  Rwp=17.22% Rexp=3.34%
+Durbin-Watson d=0.09
+1-rho=19.4%
+
+Global parameters and GOALs
+****************************
+QVCl3=0.2691+-0.0057
+QLi10352V9648Cl32=0.7309+-0.0057
+EPS2=-0.002013+-0.000022
+
+Local parameters and GOALs for phase VCl3
+******************************************************
+SpacegroupNo=148
+HermannMauguin=R-3
+XrayDensity=2.816
+Rphase=17.76%
+UNIT=NM
+A=0.606338+-0.000043
+C=1.74813+-0.00021
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0321237
+Atomic positions for phase VCl3
+---------------------------------------------
+  6     0.0000  0.0000  0.3333     E=(V+3(1.0000))
+ 18     0.3333  0.3333  0.2553     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase Li10352V9648Cl32
+******************************************************
+SpacegroupNo=216
+HermannMauguin=F-43m
+XrayDensity=2.587
+Rphase=32.01%
+UNIT=NM
+A=1.029043+-0.000047
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0872704
+Atomic positions for phase Li10352V9648Cl32
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+ 16     0.6259  0.6259  0.6259     E=(LI+1(0.3970),V(0.6030))
+ 16     0.3822  0.3822  0.3822     E=(CL-1(1.0000))
+ 16     0.8686  0.8686  0.8686     E=(CL-1(1.0000))

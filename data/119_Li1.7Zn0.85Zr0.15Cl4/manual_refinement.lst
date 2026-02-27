@@ -1,0 +1,36 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 331 peaks, 31 parameters
+Start: Thu Feb 26 15:11:05 2026; End: Thu Feb 26 15:11:07 2026
+29 iteration steps
+
+Rp=5.23%  Rpb=34.55%  R=5.96%  Rwp=6.78% Rexp=3.40%
+Durbin-Watson d=0.59
+1-rho=5.60%
+
+Global parameters and GOALs
+****************************
+QLi2ZnCl462icsd732222=1.00000
+EPS2=-0.000037+-0.000011
+
+Local parameters and GOALs for phase Li2ZnCl462icsd732222
+******************************************************
+SpacegroupNo=62
+HermannMauguin=P2_1/n2_1/m2_1/a
+XrayDensity=2.530
+Rphase=7.53%
+UNIT=NM
+A=1.278323+-0.000048
+B=0.742451+-0.000027
+C=0.611435+-0.000021
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0995356
+Atomic positions for phase Li2ZnCl462icsd732222
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.7692  0.2500  0.5136     E=(LI+1(1.0000))
+  4     0.5902  0.2500  0.0826     E=(ZN+2(1.0000))
+  4     0.5916  0.2500  0.7172     E=(CL-1(1.0000))
+  4     0.9271  0.2500  0.2577     E=(CL-1(1.0000))
+  8     0.6672  0.0067  0.2478     E=(CL-1(1.0000))

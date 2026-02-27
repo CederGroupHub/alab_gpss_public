@@ -1,0 +1,75 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 349 peaks, 59 parameters
+Start: Thu Feb 26 14:58:12 2026; End: Thu Feb 26 14:58:21 2026
+79 iteration steps
+
+Rp=4.82%  Rpb=39.29%  R=7.16%  Rwp=6.57% Rexp=2.68%
+Durbin-Watson d=0.36
+1-rho=6.02%
+
+Global parameters and GOALs
+****************************
+QLi5CrCl865icsd677420=0.2901+-0.0068
+Qspinel=0.699+-0.015
+QCrCl3148icsd220810=0.011+-0.021
+EPS2=-0.001607+-0.000017
+
+Local parameters and GOALs for phase Li5CrCl865icsd677420
+******************************************************
+SpacegroupNo=65
+HermannMauguin=C2/m2/m2/m
+XrayDensity=2.234
+Rphase=7.64%
+UNIT=NM
+A=0.727520+-0.000056
+B=1.029191+-0.000069
+C=0.73509+-0.00013
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0408601
+Atomic positions for phase Li5CrCl865icsd677420
+---------------------------------------------
+  8     0.2500  0.2500  0.2340     E=(LI+1(1.0000))
+  2     0.5000  0.0000  0.0000     E=(LI+1(1.0000))
+  2     0.5000  0.0000  0.5000     E=(CR+3(1.0000))
+  8     0.7302  0.0000  0.7291     E=(CL-1(1.0000))
+  4     0.0000  0.2686  0.5000     E=(CL-1(1.0000))
+  4     0.0000  0.2516  0.0000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.371
+Rphase=8.54%
+UNIT=NM
+A=1.048406+-0.000052
+k1=0.0100000
+B1=0.01693+-0.00023
+GrainSize(1,1,1)=24.86+-0.34
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0984146
+Atomic positions for phase spinel
+---------------------------------------------
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1500))
+  8     0.5000  0.5000  0.5000     E=(LI(0.4500))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.3750),MN(0.2500),CR(0.2500))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase CrCl3148icsd220810
+******************************************************
+SpacegroupNo=148
+HermannMauguin=R-3
+XrayDensity=3.001
+Rphase=11.53%
+UNIT=NM
+A=0.590+-0.069
+C=1.74204+-0.00017
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR2, MeanValue(GEWICHT)=0.00157848
+Atomic positions for phase CrCl3148icsd220810
+---------------------------------------------
+  6     0.0000  0.0000  0.3323     E=(CR+3(1.0000))
+ 18     0.3249  0.9840  0.2576     E=(CL-1(1.0000))

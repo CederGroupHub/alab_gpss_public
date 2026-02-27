@@ -1,0 +1,34 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 97 peaks, 31 parameters
+Start: Thu Feb 26 15:04:21 2026; End: Thu Feb 26 15:04:29 2026
+124 iteration steps
+
+Rp=3.45%  Rpb=72.32%  R=6.73%  Rwp=5.52% Rexp=1.73%
+Durbin-Watson d=0.22
+1-rho=17.1%
+
+Global parameters and GOALs
+****************************
+QLi2CoCl465icsd7322718=1.00000
+EPS2=-0.005327+-0.000019
+
+Local parameters and GOALs for phase Li2CoCl465icsd7322718
+******************************************************
+SpacegroupNo=65
+HermannMauguin=C2/m2/m2/m
+XrayDensity=2.546
+Rphase=11.93%
+UNIT=NM
+A=0.734055+-0.000068
+B=1.044051+-0.000097
+C=0.365250+-0.000041
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0624030
+Atomic positions for phase Li2CoCl465icsd7322718
+---------------------------------------------
+  4     0.2500  0.2500  0.5000     E=(LI+1(1.0000))
+  2     0.0000  0.0000  0.0000     E=(CO+2(1.0000))
+  4     0.2331  0.0000  0.5000     E=(CL-1(1.0000))
+  4     0.0000  0.7600  0.0000     E=(CL-1(1.0000))

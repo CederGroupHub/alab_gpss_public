@@ -1,0 +1,97 @@
+Rietveld refinement to file(s) pattern.xy
+BGMN version 4.2.23, 8282 measured points, 604 peaks, 87 parameters
+Start: Thu Feb 26 15:09:13 2026; End: Thu Feb 26 15:09:44 2026
+209 iteration steps
+
+Rp=5.35%  Rpb=30.96%  R=7.72%  Rwp=7.39% Rexp=2.81%
+Durbin-Watson d=0.36
+1-rho=4.73%
+
+Global parameters and GOALs
+****************************
+QLi3YCl6164icsd29965None=0.0922+-0.0022
+Qspinel=0.6898+-0.0030
+QLiCl=0.1520+-0.0017
+QYCl3=0.0660+-0.0019
+EPS2=-0.002523+-0.000015
+
+Local parameters and GOALs for phase Li3YCl6164icsd29965None
+******************************************************
+SpacegroupNo=164
+HermannMauguin=P-32/m1
+XrayDensity=2.444
+Rphase=11.69%
+UNIT=NM
+A=1.12234+-0.00010
+C=0.602395+-0.000047
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0204425
+Atomic positions for phase Li3YCl6164icsd29965None
+---------------------------------------------
+  6     0.3429  0.0000  0.0000     E=(LI+1(0.7126))
+  6     0.3263  0.0000  0.5000     E=(LI+1(0.7874))
+  1     0.0000  0.0000  0.0000     E=(Y+3(1.0000))
+  2     0.3333  0.6667  0.0080     E=(Y+3(0.2288))
+  2     0.3333  0.6667  0.5047     E=(Y+3(0.7712))
+  6     0.8870 -0.8870  0.2343     E=(CL-1(1.0000))
+  6     0.7795 -0.7795  0.7305     E=(CL-1(1.0000))
+  6     0.5541 -0.5541  0.2457     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase spinel
+******************************************************
+SpacegroupNo=227
+HermannMauguin=F4_1/d-32/m
+XrayDensity=2.261
+Rphase=11.13%
+UNIT=NM
+A=1.043458+-0.000037
+k1=0.0100000
+B1=0.01370+-0.00015
+GrainSize(1,1,1)=30.71+-0.35
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.152980
+Atomic positions for phase spinel
+---------------------------------------------
+  8     0.5000  0.5000  0.5000     E=(LI(0.5250))
+ 16     0.6250  0.6250  0.6250     E=(LI(0.1750))
+ 16     0.1250  0.1250  0.1250     E=(LI(0.4375),Y(0.1000),MG(0.3500),NB(0.0250))
+ 32     0.8817  0.8817  0.8817     E=(CL(1.0000))
+
+Local parameters and GOALs for phase LiCl
+******************************************************
+SpacegroupNo=225
+HermannMauguin=F4/m-32/m
+XrayDensity=2.065
+Rphase=12.54%
+UNIT=NM
+A=0.514710+-0.000020
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0337154
+Atomic positions for phase LiCl
+---------------------------------------------
+  4     0.0000  0.0000  0.0000     E=(LI+1(1.0000))
+  4     0.5000  0.5000  0.5000     E=(CL-1(1.0000))
+
+Local parameters and GOALs for phase YCl3
+******************************************************
+SpacegroupNo=12
+HermannMauguin=C12/m1
+XrayDensity=2.672
+Rphase=7.36%
+UNIT=NM
+A=0.69127+-0.00015
+B=1.19045+-0.00016
+C=0.635203+-0.000080
+BETA=111.767+-0.015
+k1=0.0100000
+B1=0.00500000
+GrainSize(1,1,1)=84.1811
+GEWICHT=SPHAR4, MeanValue(GEWICHT)=0.0146286
+Atomic positions for phase YCl3
+---------------------------------------------
+  4     0.0000  0.1660  0.0000     E=(Y+3(1.0000))
+  4     0.7890  0.0000  0.7530     E=(CL-1(1.0000))
+  8     0.7710  0.1790  0.2400     E=(CL-1(1.0000))
