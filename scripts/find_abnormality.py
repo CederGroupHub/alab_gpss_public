@@ -21,6 +21,9 @@ def remove_sample_id(data: Iterable[dict]) -> list[dict]:
     sanitized = deepcopy(list(data))
     for entry in sanitized:
         entry.pop("sample_id", None)
+        entry.pop("batch_number", None)
+        entry.pop("sample_index", None)
+        entry.pop("provenance", None)
     return sanitized
 
 

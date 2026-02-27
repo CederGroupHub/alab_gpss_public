@@ -15,10 +15,9 @@ from agents.model_settings import ModelSettings
 from agents.extensions.models.litellm_model import LitellmModel
 import litellm
 import dotenv
-import random
 import time
 from traceback import print_exc
-from agents import WebSearchTool
+
 dotenv.load_dotenv()
 
 TIMEOUT = 3600
@@ -369,7 +368,6 @@ class ExperimentDesignWorkflow:
             model_settings=ModelSettings(
                 reasoning={"effort": "high"},
             ),
-            # tools=[WebSearchTool()]
         )
         self.reflection_abnormality_agent = Agent(
             name="Experiment Reflection Agent (Abnormality)",
@@ -397,16 +395,6 @@ class ExperimentDesignWorkflow:
             model_settings=ModelSettings(
                 reasoning={"effort": "high"},
             ),
-            # tools=[WebSearchTool()]
-        )
-        self.design_pattern_summarization_agent = Agent(
-            name="Design Pattern Summarization Agent",
-            instructions=self.get_design_pattern_summarization_prompt(),
-            model=model,
-            output_type=DesignPatternResponse,
-            # model_settings=ModelSettings(
-            #     reasoning={"effort": "medium"},
-            # ),
         )
 
     def _hullciation_composition_prompt(self) -> str:

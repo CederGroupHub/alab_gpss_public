@@ -1,23 +1,191 @@
-from typing import Any
-from pymongo import MongoClient
+import tempfile
 from datetime import datetime, timedelta
-from bson import ObjectId
-from pydantic import BaseModel
-from impedance.models.circuits import CustomCircuit
-import matplotlib.pyplot as plt
 from functools import cached_property
-import numpy as np
 from pathlib import Path
-import pandas as pd
-from xrd_analysis import get_phase_summary_from_dara
 from traceback import print_exc
-import json
+from typing import Any
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from bson import ObjectId
+from dara import RefinementPhase, search_phases
+from dara.structure_db import ICSDDatabase
+from impedance.models.circuits import CustomCircuit
+from monty.serialization import dumpfn, loadfn
+from pydantic import BaseModel
+from pymatgen.core import Composition, Structure
+from pymongo import MongoClient
 
 
 client = MongoClient("mongodb://aragorn:27021/")
 samples_db = client["Alab_GPSS"]
 samples_collection = samples_db["samples"]
 experiment_collection = samples_db["experiment"]
+SCRIPT_DIR = Path(__file__).resolve().parent
+dara_search_folder = SCRIPT_DIR / "dara_search_results"
+dara_search_folder.mkdir(parents=True, exist_ok=True)
+dara_search_results_plots_dir = SCRIPT_DIR / "dara_search_results_plots"
+dara_search_results_plots_dir.mkdir(parents=True, exist_ok=True)
+
+
+def get_composition_from_sample_id(sample_id: str) -> Composition:
+    sample = samples_collection.find_one({"_id": ObjectId(sample_id)})
+    composition = sample["name"].split("_")[0].replace("p", ".")
+    return Composition(composition)
+
+
+def get_xrd_pattern_from_sample_id(sample_id: str) -> str | None:
+    sample = samples_collection.find_one({"_id": ObjectId(sample_id)})
+    xrdml_file = sample.get("metadata", {}).get("xrd_measurement", {}).get("xrdml")
+    return xrdml_file
+
+
+def generate_spinel_structure(composition: Composition) -> Structure:
+    anion_amt = sum(amt for e, amt in composition.items() if not e.is_metal)
+    composition /= anion_amt
+    composition *= 4
+    template_spinel = Structure.from_file(SCRIPT_DIR / "Li2FeCl4.cif")
+    template_spinel.remove_oxidation_states()
+    li_8a = {"Li": composition["Li"] / 2 * 0.6}
+    li_16c = {"Li": composition["Li"] / 2 * 0.4 / 2}
+
+    metals = {
+        e: amt / 2 for e, amt in composition.items() if e.is_metal and e.symbol != "Li"
+    }
+    metals["Li"] = composition["Li"] / 4
+
+    if sum(metals.values()) > 1:
+        sum_metals = sum(metals.values())
+        metals = {e: amt / sum_metals for e, amt in metals.items()}
+        for e, amt in metals.items():
+            li_16c.setdefault(e, 0)
+            li_16c[e] += amt * (sum_metals - 1)
+    elif sum(li_16c.values()) > 1:
+        metals.setdefault("Li", 0)
+        metals["Li"] += li_16c["Li"] - 1
+        li_16c = {"Li": 1}
+
+    anion = {e: amt / 4 for e, amt in composition.items() if not e.is_metal}
+    for site in template_spinel:
+        if site.label == "Li1":
+            site.species = Composition(li_8a)
+            site.label = "8a"
+        elif site.label == "Li2":
+            site.species = Composition(li_16c)
+            site.label = "16c"
+        elif site.label in {"Li3", "Fe1"}:
+            site.species = Composition(metals)
+            site.label = "16d"
+        elif site.label == "Cl1":
+            site.species = Composition(anion)
+            site.label = "4e"
+    return template_spinel
+
+
+def filter_cif_folder(cif_folder: Path) -> None:
+    for cif_file in cif_folder.glob("*.cif"):
+        composition = Composition(cif_file.stem.split("_")[0])
+        if all(e.is_metal for e in composition.keys()) or all(
+            not e.is_metal for e in composition.keys()
+        ):
+            cif_file.unlink()
+
+
+def dara_search_xrd_pattern(sample_id: str):
+    xrdml_file = get_xrd_pattern_from_sample_id(sample_id)
+    if xrdml_file is None:
+        return None
+
+    result_path = dara_search_folder / f"{sample_id}.json"
+    if result_path.exists():
+        return loadfn(result_path)
+
+    composition = get_composition_from_sample_id(sample_id)
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_path = Path(temp_dir)
+        xrdml_file_path = temp_path / "xrdml_file.xrdml"
+        with xrdml_file_path.open("w") as f:
+            f.write(xrdml_file)
+
+        structure = generate_spinel_structure(composition)
+        structure.to(filename=str(temp_path / "spinel.cif"))
+
+        icsd = ICSDDatabase()
+        dara_cifs = temp_path / "dara_cifs"
+        icsd.get_cifs_by_chemsys(composition.chemical_system, dest_dir=dara_cifs)
+        filter_cif_folder(dara_cifs)
+
+        phases = []
+        for cif_file in dara_cifs.glob("*.cif"):
+            phases.append(RefinementPhase(path=cif_file, params={}))
+        phases.append(
+            RefinementPhase(path=temp_path / "spinel.cif", params={"b1": "0_0^0.08"})
+        )
+
+        print(f"Searching for {sample_id} with {len(phases)} phases")
+        results = search_phases(
+            str(xrdml_file_path),
+            phases,
+            max_phases=4,
+            phase_params={"gewicht": "SPHAR4", "lattice_range": 0.05},
+            rpb_threshold=0.0,
+            enable_angular_cut=False,
+        )
+
+        dumpfn(results, result_path)
+        return results
+
+
+def get_phase_summary_from_dara(sample_id: str, rwp_threshold: float = 10):
+    try:
+        dara_result = dara_search_xrd_pattern(sample_id)
+    except ValueError as e:
+        if "No peaks are detected in the pattern." in str(e):
+            return {"phase_summary": {}, "rwp": None, "result_file": None}
+        raise
+
+    try:
+        if dara_result:
+            top_result = dara_result[0].refinement_result
+            fig = top_result.visualize()
+            png_path = dara_search_results_plots_dir / f"{sample_id}.png"
+            png_path.unlink(missing_ok=True)
+            fig.write_image(str(png_path))
+            with (dara_search_results_plots_dir / f"{sample_id}.plotly.json").open(
+                "w"
+            ) as f:
+                f.write(fig.to_json())
+    except Exception as e:
+        print(f"Error generating XRD plots for sample {sample_id}: {e}")
+        print_exc()
+
+    if dara_result is None:
+        return None
+
+    top_result = dara_result[0].refinement_result
+    weight_fractions = top_result.get_phase_weights()
+    phases = dara_result[0].phases
+    new_weight_fractions = {}
+    for i, phase in enumerate(weight_fractions):
+        if any("spinel" in rp.path.stem for rp in phases[i]):
+            new_weight_fractions["spinel"] = weight_fractions[phase]
+        else:
+            new_weight_fractions[phase] = weight_fractions[phase]
+
+    rwp = float(top_result.lst_data.rwp)
+    if rwp > rwp_threshold:
+        top_result.visualize().write_image(dara_search_results_plots_dir / f"{sample_id}.png")
+
+    with (dara_search_folder / f"{sample_id}.json").open() as f:
+        result_file = f.read()
+
+    return {
+        "phase_summary": {k: float(v) for k, v in new_weight_fractions.items()},
+        "rwp": rwp,
+        "result_file": result_file,
+    }
 
 
 # Define the objective function for black-box optimization

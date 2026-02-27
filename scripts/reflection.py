@@ -8,6 +8,7 @@ from monty.serialization import loadfn
 from pymongo import MongoClient
 from pymatgen.core import Composition
 import rich
+from typing import Iterable
 from experiment_design import (
     MaterialDataAbnormalityResult,
     NewExperiment,
@@ -30,19 +31,17 @@ def safely_get_composition(composition):
         return None
 
 
-def remove_sample_id(data):
-    """
-    Remove the 'sample_id' key from each dictionary in a list of material data dicts.
-    Args:
-        data (list of dict): The data to process, where each element is a dict for a sample.
-    Returns:
-        list of dict: The data with 'sample_id' key removed from each dict, if present.
-    """
-    data = deepcopy(data)
-    for d in data:
-        if "sample_id" in d:
-            del d["sample_id"]
-    return data
+def remove_sample_id(data: Iterable[dict]) -> list[dict]:
+    """Return a deep-copied list with sample_id, batch_number, sample_index, and provenance stripped from each entry."""
+    from copy import deepcopy
+
+    sanitized = deepcopy(list(data))
+    for entry in sanitized:
+        entry.pop("sample_id", None)
+        entry.pop("batch_number", None)
+        entry.pop("sample_index", None)
+        entry.pop("provenance", None)
+    return sanitized
 
 
 client = MongoClient("mongodb://aragorn:27021/")
