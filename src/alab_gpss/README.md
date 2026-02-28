@@ -1,137 +1,69 @@
 # ALAB GPSS
 
-Control and analysis code for the GPSS platform, including:
-- hardware device/task orchestration (`alab_gpss.system`)
-- FastAPI backend + React UI (`alab_gpss.backend`, `alab_gpss/ui`)
-- experimental data analysis workflows (`scripts/`)
-- support daemons for scanner/light/caliper integrations (`src/daemon/`)
+Control code for the A-Lab GPSS platform.
 
-## Repository Layout
+This repository includes:
+- Hardware device and task orchestration: `alab_gpss.system`
+- Sample-management backend and UI: `alab_gpss.backend`, `alab_gpss/ui` (FastAPI + React)
 
-```text
-src/
-  alab_gpss/
-    backend/                # FastAPI app + routers
-    system/                 # device wrappers and task definitions
-    experiment_design/      # chemistry/reaction helpers
-    ui/                     # React frontend
-  daemon/
-    gpss_qrcode_scanner/
-    gpss_height_caliper/
-    gpss_light_monitor/
-scripts/                    # analysis and AI workflow scripts
-data/                       # local dataset location (expected: data/dataset.json)
-```
+## Who this is for
 
-## Prerequisites
+Use this module-level package when you want to:
+- Run the local/simulated GPSS service stack
+- Access the sample-management UI and AlabOS integration
+- Submit and monitor experiments through the standard interfaces
 
-- Python 3.10+
-- Node.js 18+ and npm (for UI development)
-- MongoDB reachable by the configured hosts
-- Optional: hardware/network access for GPSS devices and Aeris/BioLogic integrations
+## How to run the code
+Before starting services:
+1. Install MongoDB and RabbitMQ.
+2. Ensure both services are running.
 
-## Python Setup
-
-From the repository root:
+Set the environment variable so AlabOS can find the configuration file:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .
+export ALABOS_CONFIG_PATH=system/alabos_config_example.toml
 ```
 
-If you use `uv`:
+Open three terminals and start the three services provided by AlabOS + A-Lab GPSS.
+You need `ALABOS_CONFIG_PATH` set in all three terminals.
 
 ```bash
-uv sync
+alabos launch  # alabos main process
+alabos launch_worker  # alabos worker process
+
+python -m alab_gpss.backend.server  # alab_gpss sample management user interface
 ```
 
-## Configuration
+Service roles:
+- `alabos launch`: Main AlabOS process
+- `alabos launch_worker`: Worker process for background execution
+- `python -m alab_gpss.backend.server`: GPSS backend/UI server
 
-### AlabOS / infrastructure config
+### What you will see
+After all services start, two webpages should be available:
 
-An example config is provided at:
-- `src/alab_gpss/system/alabos_config_example.toml`
+- http://localhost:8000
 
-You will need to set host/port/credentials for MongoDB, RabbitMQ, alarm channels, etc.
+  This is the sample-management interface. Use it to track sample status and position, and to trigger manual measurements (for example, starting XRD/EIS measurements).
 
-### Device/network assumptions
+![Sample management user interface](images/alab_gpss_webpage.png)
 
-Current code includes hardcoded/internal addresses for many devices (robot arms, furnaces, BioLogic, Aeris, etc.).
-Review before deployment:
-- `src/alab_gpss/system/__init__.py`
-- `src/alab_gpss/backend/routers/ionic_conductivity.py`
-- `src/alab_gpss/backend/routers/xrd_sample_holder.py`
+- http://localhost:8895
 
-### TLS certificates (optional)
+  This is the AlabOS main interface. Submit experiments here to run them on the lab.
 
-`backend/server.py` attempts to use:
-- `ssl_keys/aragorn-key.pem`
-- `ssl_keys/aragorn-cert.pem`
+![Alabos main interface](images/alabos_webpage.png)
 
-If files are missing, the wrapper uses a fallback to run without SSL files.
+### Job submission
+AlabOS provides API endpoints for experiment management.
+For details, see the [AlabOS documentation](https://cedergrouphub.github.io/alabos/).
 
-## Run Backend API
+To submit an experiment to A-Lab GPSS, refer to [submit_template.ipynb](submit_template.ipynb).
+
+## Clean up the database
+If you need a fresh start, you can clean the database with the command below.
+Do not run this against a production database.
 
 ```bash
-python -m alab_gpss.backend.server
+alabos clean -a
 ```
-
-Default bind:
-- host: `0.0.0.0`
-- port: `8000`
-
-Main routers are mounted under:
-- `/api/dosing-head/`
-- `/api/consumable-rack/`
-- `/api/xrd-sample-holder/`
-- `/api/ionic-conductivity/`
-
-## Run Frontend (dev)
-
-```bash
-cd src/alab_gpss/ui
-npm install
-npm start
-```
-
-The UI proxies API requests to `http://localhost:8000` (see `ui/package.json`).
-
-To build frontend assets:
-
-```bash
-npm run build
-```
-
-The backend serves built assets from `src/alab_gpss/ui/build/` when present.
-
-## Analysis / Workflow Scripts
-
-Main scripts in `scripts/`:
-- `analysis_workflow.py`: conductivity fitting + XRD phase extraction + DB update pipeline
-- `experiment_design.py`: agent-driven experiment design workflow utilities
-- `explore.py`: new material proposal workflow
-- `explore_bo.py`: Bayesian optimization + proposal generation
-- `find_abnormality.py`: abnormality detection workflow
-- `reflection.py`: reflection workflow for completed experiments
-
-Most of these scripts expect a dataset at:
-- `data/dataset.json`
-
-And/or access to MongoDB instances used in the lab environment.
-
-## Daemons
-
-- `src/daemon/gpss_qrcode_scanner/main.py`
-  - reads scanner input and posts measurement jobs to ionic conductivity API
-- `src/daemon/gpss_height_caliper/main.py`
-  - reads caliper values and updates sample height via API
-- `src/daemon/gpss_light_monitor/main.py`
-  - monitors/controls Govee lighting devices
-
-These daemons are environment-driven (API URLs, device hints, credentials), but include sensible defaults in code.
-
-## Notes
-
-- `pyproject.toml` currently defines a console script entry `alab_gpss = alab_gpss.cli:cli`, but `src/alab_gpss/cli.py` is not present in this repository.
-- Some modules are tightly coupled to lab-specific infrastructure; local development may require stubbing or simulation mode.
