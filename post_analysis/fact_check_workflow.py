@@ -1,12 +1,12 @@
 """
-LLM Workflow for Fact-Checking Claims in Materials Science Dataset
+LLM Workflow for Fact-Checking Claims in Materials Science Dataset (OpenAI GPT-5-mini)
 
 This workflow:
 1. Extracts all text fields (hypothesis, justification, etc.) from the dataset
 2. Uses LLM to extract and classify claims into:
    - dataset_referenced: claims citing data from the dataset
    - external_referenced: claims citing external scientific knowledge
-3. Verifies only external_referenced claims using web search (Claude Sonnet)
+3. Verifies only external_referenced claims using OpenAI's web search tool
 """
 
 import json
@@ -14,8 +14,9 @@ import re
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
 from typing import Literal
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from monty.serialization import loadfn
-import litellm
+from openai import OpenAI
 
 # Load environment variables
 import os
@@ -24,13 +25,18 @@ load_dotenv(Path(__file__).parent.parent / ".env")
 
 # Configuration
 ROOT_DIR = Path(__file__).parent.parent
-DATA_PATH = ROOT_DIR / "hi_spin_tabulated_data_with_metadata.json"
+DATA_PATH = ROOT_DIR / "data" / "hi_spin_tabulated_data_with_metadata.json"
 OUTPUT_DIR = ROOT_DIR / "fact_checking" / "results"
-CHECKPOINT_DIR = OUTPUT_DIR / "checkpoints"
+CHECKPOINT_DIR = OUTPUT_DIR / "checkpoints_openai"
 
-# LLM Models
-CLAIM_EXTRACTION_MODEL = "anthropic/claude-sonnet-4-5"
-EXTERNAL_VERIFICATION_MODEL = "anthropic/claude-sonnet-4-5"  # Must use sonnet for web search
+# OpenAI Model
+MODEL = "gpt-5-mini"
+REASONING_EFFORT = "low"
+MAX_RETRIES = 3
+PARALLEL_WORKERS = 5  # Number of parallel verification calls
+
+# Initialize OpenAI client
+client = OpenAI()
 
 
 def get_claim_id(claim: "ExtractedClaim") -> str:
@@ -49,12 +55,42 @@ def save_checkpoint(checkpoint_type: str, item_id: str, data: dict):
         json.dump(data, f, indent=2)
 
 
-def load_checkpoint(checkpoint_type: str, item_id: str) -> dict | None:
-    """Load a checkpoint if it exists."""
+def is_checkpoint_valid(checkpoint: dict) -> bool:
+    """Check if a checkpoint contains valid results (not parse errors)."""
+    if not checkpoint:
+        return False
+    evidence = checkpoint.get("evidence", [])
+    # Invalidate checkpoints with parse errors
+    invalid_markers = [
+        "[!] Could not parse structured response",
+        "[!] Response was truncated",
+        "[!] Error during verification",
+        "[!] Unable to verify - API error",
+    ]
+    for marker in invalid_markers:
+        if any(marker in str(e) for e in evidence):
+            return False
+    return True
+
+
+def load_checkpoint(checkpoint_type: str, item_id: str, validate: bool = False) -> dict | None:
+    """Load a checkpoint if it exists.
+
+    Args:
+        checkpoint_type: Type of checkpoint (e.g., 'external_verification')
+        item_id: Unique ID for the checkpoint
+        validate: If True, check if checkpoint is valid (no parse errors)
+
+    Returns:
+        Checkpoint data or None if not found or invalid
+    """
     checkpoint_file = CHECKPOINT_DIR / checkpoint_type / f"{item_id}.json"
     if checkpoint_file.exists():
         with open(checkpoint_file, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            checkpoint = json.load(f)
+        if validate and not is_checkpoint_valid(checkpoint):
+            return None
+        return checkpoint
     return None
 
 
@@ -89,8 +125,8 @@ class ExtractedClaim:
 class VerificationResult:
     """Result of verifying a claim."""
     claim: ExtractedClaim
-    status: Literal["verified", "contradicted", "no_support"]  # Three-way classification
-    confidence: float  # 0-1
+    status: Literal["verified", "contradicted", "no_support"]
+    confidence: float
     explanation: str
     evidence: list[str] = field(default_factory=list)
 
@@ -137,7 +173,7 @@ def extract_text_fields(data: list[dict]) -> list[dict]:
             if "justification" in sample["material_proposal"]:
                 sample_info["texts"]["material_proposal_justification"] = sample["material_proposal"]["justification"]
 
-        if sample_info["texts"]:  # Only include if there are text fields
+        if sample_info["texts"]:
             extracted.append(sample_info)
 
     return extracted
@@ -216,21 +252,16 @@ def extract_claims_from_text(
     )
 
     try:
-        response = litellm.completion(
-            model=CLAIM_EXTRACTION_MODEL,
+        response = client.chat.completions.create(
+            model=MODEL,
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.0,
+            response_format={"type": "json_object"},
         )
 
         content = response.choices[0].message.content
         if not content:
             print(f"Empty response for {sample_index}/{source_field}")
             return []
-
-        # Try to extract JSON from the response (may be wrapped in markdown)
-        json_match = re.search(r'```(?:json)?\s*([\s\S]*?)```', content)
-        if json_match:
-            content = json_match.group(1).strip()
 
         result = json.loads(content)
         claims = []
@@ -247,7 +278,6 @@ def extract_claims_from_text(
         return claims
     except json.JSONDecodeError as e:
         print(f"JSON parse error for {sample_index}/{source_field}: {e}")
-        print(f"  Response content (first 200 chars): {content[:200] if content else 'None'}")
         return []
     except Exception as e:
         print(f"Error extracting claims for {sample_index}/{source_field}: {e}")
@@ -264,13 +294,12 @@ def extract_all_claims(extracted_texts: list[dict], use_checkpoints: bool = True
 
         # Check for existing checkpoint
         if use_checkpoints:
-            checkpoint = load_checkpoint("claims", sample_index)
+            checkpoint = load_checkpoint("claims", str(sample_index))
             if checkpoint:
-                # Load claims from checkpoint
                 for c in checkpoint.get("claims", []):
                     all_claims.append(ExtractedClaim(**c))
                 skipped += 1
-                print(f"  [{i+1}/{len(extracted_texts)}] {sample_index[:8]}... (loaded from checkpoint)")
+                print(f"  [{i+1}/{len(extracted_texts)}] {str(sample_index)[:8]}... (loaded from checkpoint)")
                 continue
 
         print(f"Processing sample {i+1}/{len(extracted_texts)}: {sample_index}")
@@ -282,7 +311,7 @@ def extract_all_claims(extracted_texts: list[dict], use_checkpoints: bool = True
                     claims = extract_claims_from_text(
                         text=text,
                         source_field=field_name,
-                        sample_index=sample_index,
+                        sample_index=str(sample_index),
                         batch_number=sample["batch_number"],
                         provenance=sample["provenance"]
                     )
@@ -292,7 +321,7 @@ def extract_all_claims(extracted_texts: list[dict], use_checkpoints: bool = True
 
         # Save checkpoint for this sample
         if use_checkpoints and sample_claims:
-            save_checkpoint("claims", sample_index, {
+            save_checkpoint("claims", str(sample_index), {
                 "sample_index": sample_index,
                 "claims": [asdict(c) for c in sample_claims]
             })
@@ -305,7 +334,7 @@ def extract_all_claims(extracted_texts: list[dict], use_checkpoints: bool = True
     return all_claims
 
 
-EXTERNAL_VERIFICATION_PROMPT = """You are a scientific fact-checker. Use web search to verify the following claim with REAL literature sources.
+EXTERNAL_VERIFICATION_PROMPT = """You are a scientific fact-checker. Verify the following claim using web search to find REAL literature sources.
 
 Claim: {claim_text}
 
@@ -337,55 +366,51 @@ IMPORTANT: Do NOT classify as "contradicted" if:
 - Literature discusses a DIFFERENT but related system (different composition, different conditions)
 - The "contradiction" requires extrapolation or inference
 - The claim is about a specific system but literature is about a general principle that may not apply
-
 """
 
-# Search effort levels for external verification
-SEARCH_EFFORT_LOW = "low"
-SEARCH_EFFORT_MEDIUM = "medium"
-SEARCH_EFFORT_HIGH = "high"
 
-
-def verify_external_claim(claim: ExtractedClaim, search_effort: str = SEARCH_EFFORT_LOW) -> VerificationResult:
-    """Verify an external-referenced claim using web search.
-
-    Args:
-        claim: The claim to verify
-        search_effort: Search effort level - "low", "medium", or "high"
-    """
-
-    prompt = EXTERNAL_VERIFICATION_PROMPT.format(claim_text=claim.claim_text)
-
-    try:
-        response = litellm.completion(
-            model=EXTERNAL_VERIFICATION_MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.0,
-            web_search_options={
-                "search_context_size": search_effort,
-            }
-        )
-        content = response.choices[0].message.content
-    except Exception as e:
-        print(f"Error verifying external claim: {e}")
-        return VerificationResult(
-            claim=claim,
-            status="no_support",
-            confidence=0.0,
-            explanation=f"Verification failed: {str(e)}",
-            evidence=["[!] Unable to verify - API error"]
-        )
-
+def is_response_truncated(content: str) -> bool:
+    """Check if a response appears to be truncated."""
     if not content:
-        return VerificationResult(
-            claim=claim,
-            status="no_support",
-            confidence=0.0,
-            explanation="Empty response from LLM",
-            evidence=[]
-        )
+        return True
+    content = content.strip()
+    # Check if it looks like JSON but doesn't end properly
+    if '{' in content:
+        # Count braces
+        open_braces = content.count('{')
+        close_braces = content.count('}')
+        if open_braces > close_braces:
+            return True
+        # Check if it ends mid-sentence (common truncation patterns)
+        if content.endswith(('...', ' ', ',', ':', '"', "'")):
+            return True
+        # Check for incomplete JSON (ends without closing brace)
+        last_brace = content.rfind('}')
+        if last_brace == -1 or last_brace < content.rfind('{'):
+            return True
+    return False
 
-    # Try to extract JSON from the response (may be wrapped in markdown)
+
+def parse_nested_json(text: str) -> dict | None:
+    """Recursively parse JSON, handling nested JSON strings in fields."""
+    try:
+        result = json.loads(text)
+        if isinstance(result, dict):
+            for key, value in result.items():
+                if isinstance(value, str) and value.strip().startswith('{'):
+                    try:
+                        nested = json.loads(value)
+                        result[key] = nested
+                    except json.JSONDecodeError:
+                        pass
+        return result
+    except json.JSONDecodeError:
+        return None
+
+
+def extract_json_from_response(content: str) -> str:
+    """Extract JSON object from response content."""
+    # Try to extract JSON from markdown code blocks
     json_match = re.search(r'```(?:json)?\s*([\s\S]*?)```', content)
     if json_match:
         content = json_match.group(1).strip()
@@ -396,35 +421,96 @@ def verify_external_claim(claim: ExtractedClaim, search_effort: str = SEARCH_EFF
     if json_start != -1 and json_end != -1:
         content = content[json_start:json_end + 1]
 
-    def parse_nested_json(text: str) -> dict | None:
-        """Recursively parse JSON, handling nested JSON strings in fields."""
-        try:
-            result = json.loads(text)
-            if isinstance(result, dict):
-                for key, value in result.items():
-                    if isinstance(value, str) and value.strip().startswith('{'):
-                        try:
-                            nested = json.loads(value)
-                            result[key] = nested
-                        except json.JSONDecodeError:
-                            pass
-            return result
-        except json.JSONDecodeError:
-            return None
+    return content
 
-    result = parse_nested_json(content)
+
+def verify_external_claim(claim: ExtractedClaim) -> VerificationResult:
+    """Verify an external-referenced claim using OpenAI's web search tool."""
+
+    prompt = EXTERNAL_VERIFICATION_PROMPT.format(claim_text=claim.claim_text)
+
+    content = None
+    result = None
+    last_error = None
+
+    for attempt in range(MAX_RETRIES):
+        try:
+            # Use OpenAI's web search tool with responses API
+            response = client.responses.create(
+                model=MODEL,
+                input=prompt,
+                tools=[{"type": "web_search_preview"}],
+                reasoning={"effort": REASONING_EFFORT},
+            )
+
+            # Extract text content from response
+            content = None
+            for item in response.output:
+                if item.type == "message":
+                    for content_item in item.content:
+                        if content_item.type == "output_text":
+                            content = content_item.text
+                            break
+                    if content:
+                        break
+
+            # Check for truncation and retry if needed
+            if is_response_truncated(content):
+                if attempt < MAX_RETRIES - 1:
+                    print(f"\n  [Retry {attempt + 1}/{MAX_RETRIES}] Response appears truncated, retrying...")
+                    continue
+                else:
+                    print(f"\n  [Warning] Response still truncated after {MAX_RETRIES} attempts")
+                    break
+
+            # Try to parse JSON from the response
+            json_content = extract_json_from_response(content)
+            result = parse_nested_json(json_content)
+
+            if result is None:
+                # JSON parsing failed, retry
+                if attempt < MAX_RETRIES - 1:
+                    print(f"\n  [Retry {attempt + 1}/{MAX_RETRIES}] Could not parse JSON response, retrying...")
+                    continue
+                else:
+                    print(f"\n  [Warning] Could not parse JSON after {MAX_RETRIES} attempts")
+                    break
+            else:
+                # Successfully parsed, break out of retry loop
+                break
+
+        except Exception as e:
+            last_error = e
+            if attempt < MAX_RETRIES - 1:
+                print(f"\n  [Retry {attempt + 1}/{MAX_RETRIES}] API error: {e}, retrying...")
+                continue
+            else:
+                print(f"Error verifying external claim after {MAX_RETRIES} attempts: {e}")
+                return VerificationResult(
+                    claim=claim,
+                    status="no_support",
+                    confidence=0.0,
+                    explanation=f"Verification failed after {MAX_RETRIES} attempts: {str(e)}",
+                    evidence=["[!] Unable to verify - API error"]
+                )
+
+    if not content:
+        return VerificationResult(
+            claim=claim,
+            status="no_support",
+            confidence=0.0,
+            explanation="Empty response from LLM",
+            evidence=[]
+        )
 
     if result:
         explanation = result.get("explanation", "")
         confidence = result.get("confidence", 0.0)
 
-        # Handle new 'status' field or legacy 'is_verified' field
         status = result.get("status")
         if status is None:
-            # Legacy format: convert is_verified to status
             is_verified = result.get("is_verified", False)
             status = "verified" if is_verified else "no_support"
-        # Validate status
         if status not in ("verified", "contradicted", "no_support"):
             status = "no_support"
 
@@ -435,7 +521,6 @@ def verify_external_claim(claim: ExtractedClaim, search_effort: str = SEARCH_EFF
         # Build evidence list
         evidence = []
 
-        # Add verification status
         if status == "verified":
             evidence.append("[VERIFIED] Verified with web search")
         elif status == "contradicted":
@@ -443,11 +528,9 @@ def verify_external_claim(claim: ExtractedClaim, search_effort: str = SEARCH_EFF
         else:
             evidence.append("[NO_SUPPORT] No supporting or contradicting evidence found")
 
-        # Add scientific basis
         if result.get("scientific_basis"):
             evidence.append(f"Scientific basis: {result['scientific_basis']}")
 
-        # Add references from web search
         if result.get("references"):
             refs = result["references"]
             if isinstance(refs, list):
@@ -478,6 +561,9 @@ def verify_external_claim(claim: ExtractedClaim, search_effort: str = SEARCH_EFF
             evidence=evidence
         )
     else:
+        # Check if this is a truncation issue
+        truncated = is_response_truncated(content)
+
         # If not JSON, analyze the text response
         has_support = any(word in content.lower() for word in ["verified", "confirmed", "supported"])
         has_contradiction = any(word in content.lower() for word in ["contradicted", "contradicts", "opposite", "incorrect"])
@@ -485,224 +571,34 @@ def verify_external_claim(claim: ExtractedClaim, search_effort: str = SEARCH_EFF
 
         if has_contradiction:
             status = "contradicted"
-            confidence = 0.5
+            confidence = 0.4 if truncated else 0.5
         elif has_support and not has_no_support:
             status = "verified"
-            confidence = 0.5
+            confidence = 0.4 if truncated else 0.5
         else:
             status = "no_support"
-            confidence = 0.3
+            confidence = 0.2 if truncated else 0.3
+
+        # Build a cleaner explanation from truncated content
+        if truncated:
+            # Try to extract just the explanation text from truncated JSON
+            explanation_match = re.search(r'"explanation":\s*"([^"]*)', content)
+            if explanation_match:
+                explanation = explanation_match.group(1) + " [TRUNCATED]"
+            else:
+                explanation = content[:500] + " [TRUNCATED]" if content else "No explanation provided"
+            evidence = ["[!] Response was truncated - parsed from incomplete data"]
+        else:
+            explanation = content[:500] if content else "No explanation provided"
+            evidence = ["[!] Could not parse structured response"]
 
         return VerificationResult(
             claim=claim,
             status=status,
             confidence=confidence,
-            explanation=content[:500] if content else "No explanation provided",
-            evidence=["[!] Could not parse structured response"]
+            explanation=explanation,
+            evidence=evidence
         )
-
-
-def reverify_unverified_external_claims(
-    results_file: str | None = None,
-    search_effort: str = SEARCH_EFFORT_MEDIUM,
-    max_claims: int | None = None,
-    start_from_claim: int = 0
-) -> dict:
-    """
-    Re-verify external claims that were not verified in a previous run.
-
-    This function reads the existing results file, identifies external claims
-    that were marked as "no_support" or "contradicted", and re-searches them
-    with higher search effort.
-
-    Args:
-        results_file: Path to previous results JSON file. Defaults to standard output location.
-        search_effort: Search effort level - "low", "medium", or "high". Defaults to "medium".
-        max_claims: Maximum number of claims to re-verify (for testing).
-        start_from_claim: Index to start re-verification from (0-based). Use this to resume
-            if a previous re-verification was interrupted.
-
-    Returns:
-        Dictionary with updated results
-    """
-    # Load previous results
-    if results_file is None:
-        results_file = OUTPUT_DIR / "fact_check_results.json"
-    else:
-        results_file = Path(results_file)
-
-    if not results_file.exists():
-        raise FileNotFoundError(f"Results file not found: {results_file}")
-
-    print("=" * 60)
-    print(f"RE-VERIFYING NON-VERIFIED EXTERNAL CLAIMS (effort: {search_effort})")
-    print("=" * 60)
-
-    with open(results_file, 'r', encoding='utf-8') as f:
-        results = json.load(f)
-
-    # Find claims to re-verify: "no_support" and "contradicted" (or legacy is_verified=False)
-    external_results = results.get("external_verification_results", [])
-
-    def needs_reverification(r: dict) -> bool:
-        """Check if a result needs re-verification."""
-        status = r.get("status")
-        if status is not None:
-            # New format: re-verify "no_support" and "contradicted"
-            return status in ("no_support", "contradicted")
-        else:
-            # Legacy format: re-verify all that are not verified
-            return not r.get("is_verified", False)
-
-    to_reverify = [r for r in external_results if needs_reverification(r)]
-
-    # Count by status
-    no_support_count = sum(1 for r in to_reverify if r.get("status") == "no_support" or (r.get("status") is None and not r.get("is_verified", False)))
-    contradicted_count = sum(1 for r in to_reverify if r.get("status") == "contradicted")
-
-    print(f"\nFound {len(to_reverify)} claims to re-verify out of {len(external_results)} total")
-    print(f"  - no_support: {no_support_count}")
-    print(f"  - contradicted: {contradicted_count}")
-
-    if start_from_claim > 0:
-        if start_from_claim >= len(to_reverify):
-            print(f"start_from_claim ({start_from_claim}) is >= total claims to re-verify ({len(to_reverify)}). Nothing to process.")
-            return results
-        to_reverify = to_reverify[start_from_claim:]
-        print(f"Starting from claim index {start_from_claim} ({len(to_reverify)} remaining)")
-
-    if max_claims:
-        to_reverify = to_reverify[:max_claims]
-        print(f"Limited to {max_claims} claims for re-verification")
-
-    if not to_reverify:
-        print("No claims to process.")
-        return results
-
-    # Re-verify each claim
-    updated_count = 0
-    status_changes = {"to_verified": 0, "to_contradicted": 0, "to_no_support": 0}
-
-    # Fields expected by ExtractedClaim dataclass
-    claim_fields = {"claim_text", "claim_type", "source_field", "batch_number", "provenance", "sample_index"}
-
-    total_to_process = len(to_reverify)
-    skipped_from_checkpoint = 0
-    for i, result_dict in enumerate(to_reverify):
-        claim_data = result_dict.get("claim", {})
-        # Filter to only include fields expected by ExtractedClaim
-        filtered_claim_data = {k: v for k, v in claim_data.items() if k in claim_fields}
-        claim = ExtractedClaim(**filtered_claim_data)
-        claim_id = get_claim_id(claim)
-
-        # Check for existing checkpoint with status
-        checkpoint = load_checkpoint("external_verification", claim_id)
-        if checkpoint and checkpoint.get("status") and checkpoint["status"] != "contradicted":
-            # Use cached result from checkpoint
-            skipped_from_checkpoint += 1
-            cached_status = checkpoint["status"]
-            print(f"  [{i+1}/{total_to_process}] {claim_id}... (loaded from checkpoint, status: {cached_status})")
-
-            # Update the result in the original list with checkpoint data
-            for j, orig_result in enumerate(external_results):
-                orig_claim_data = {k: v for k, v in orig_result["claim"].items() if k in claim_fields}
-                orig_claim_id = get_claim_id(ExtractedClaim(**orig_claim_data))
-                if orig_claim_id == claim_id:
-                    external_results[j] = {
-                        "claim": orig_result["claim"],
-                        "status": checkpoint["status"],
-                        "is_verified": checkpoint.get("is_verified", checkpoint["status"] == "verified"),
-                        "confidence": checkpoint.get("confidence", 0.0),
-                        "explanation": checkpoint.get("explanation", ""),
-                        "evidence": checkpoint.get("evidence", [])
-                    }
-                    updated_count += 1
-                    status_changes[f"to_{checkpoint['status']}"] = status_changes.get(f"to_{checkpoint['status']}", 0) + 1
-                    break
-            continue
-
-        old_status = result_dict.get("status", "no_support" if not result_dict.get("is_verified", False) else "verified")
-        global_index = start_from_claim + i
-        # Handle non-ASCII characters for Windows console
-        claim_preview = claim.claim_text[:80].encode('ascii', 'replace').decode('ascii')
-        print(f"\n[{i+1}/{total_to_process}] (index {global_index}) [{old_status}] Re-verifying: {claim_preview}...")
-
-        try:
-            new_result = verify_external_claim(claim, search_effort=search_effort)
-
-            # Update the result in the original list
-            for j, orig_result in enumerate(external_results):
-                orig_claim_data = {k: v for k, v in orig_result["claim"].items() if k in claim_fields}
-                orig_claim_id = get_claim_id(ExtractedClaim(**orig_claim_data))
-                if orig_claim_id == claim_id:
-                    external_results[j] = {
-                        "claim": orig_result["claim"],  # Preserve original claim data with extra fields
-                        "status": new_result.status,
-                        "is_verified": new_result.is_verified,  # Keep for backwards compatibility
-                        "confidence": new_result.confidence,
-                        "explanation": new_result.explanation,
-                        "evidence": new_result.evidence
-                    }
-                    updated_count += 1
-
-                    # Track status changes
-                    status_changes[f"to_{new_result.status}"] = status_changes.get(f"to_{new_result.status}", 0) + 1
-
-                    status_symbol = {"verified": "+", "contradicted": "X", "no_support": "?"}
-                    print(f"  [{status_symbol.get(new_result.status, '?')}] {old_status} -> {new_result.status} (confidence: {new_result.confidence:.2f})")
-
-                    # Update checkpoint
-                    save_checkpoint("external_verification", claim_id, {
-                        "claim_id": claim_id,
-                        "status": new_result.status,
-                        "is_verified": new_result.is_verified,
-                        "confidence": new_result.confidence,
-                        "explanation": new_result.explanation,
-                        "evidence": new_result.evidence,
-                        "search_effort": search_effort
-                    })
-                    break
-
-        except Exception as e:
-            print(f"  [!] Error: {e}")
-
-    # Update summary with new three-way classification
-    results["external_verification_results"] = external_results
-    verified_count = sum(1 for r in external_results if r.get("status") == "verified" or (r.get("status") is None and r.get("is_verified", False)))
-    contradicted_count = sum(1 for r in external_results if r.get("status") == "contradicted")
-    no_support_count = sum(1 for r in external_results if r.get("status") == "no_support" or (r.get("status") is None and not r.get("is_verified", False)))
-
-    results["summary"]["external_referenced"]["verified"] = verified_count
-    results["summary"]["external_referenced"]["contradicted"] = contradicted_count
-    results["summary"]["external_referenced"]["no_support"] = no_support_count
-    # Keep legacy field for backwards compatibility
-    results["summary"]["external_referenced"]["not_verified"] = contradicted_count + no_support_count
-    results["summary"]["external_referenced"]["avg_confidence"] = (
-        sum(r.get("confidence", 0) for r in external_results) / len(external_results)
-        if external_results else 0
-    )
-
-    # Save updated results
-    with open(results_file, 'w', encoding='utf-8') as f:
-        json.dump(results, f, indent=2)
-
-    print("\n" + "=" * 60)
-    print("RE-VERIFICATION SUMMARY")
-    print("=" * 60)
-    print(f"Claims processed: {updated_count}")
-    if skipped_from_checkpoint > 0:
-        print(f"  - Loaded from checkpoints: {skipped_from_checkpoint}")
-    print(f"Status changes:")
-    print(f"  - Now verified: {status_changes.get('to_verified', 0)}")
-    print(f"  - Now contradicted: {status_changes.get('to_contradicted', 0)}")
-    print(f"  - Still no_support: {status_changes.get('to_no_support', 0)}")
-    print(f"\nFinal totals:")
-    print(f"  - Verified: {verified_count}/{len(external_results)}")
-    print(f"  - Contradicted: {contradicted_count}/{len(external_results)}")
-    print(f"  - No support: {no_support_count}/{len(external_results)}")
-    print(f"\nResults saved to {results_file}")
-
-    return results
 
 
 def run_fact_check_workflow(
@@ -710,7 +606,8 @@ def run_fact_check_workflow(
     skip_extraction: bool = False,
     claims_file: str | None = None,
     resume: bool = True,
-    clear_existing_checkpoints: bool = False
+    clear_existing_checkpoints: bool = False,
+    parallel_workers: int = PARALLEL_WORKERS
 ) -> dict:
     """
     Run the complete fact-checking workflow with checkpoint support.
@@ -721,6 +618,7 @@ def run_fact_check_workflow(
         claims_file: Path to pre-extracted claims JSON file
         resume: If True, resume from checkpoints (default: True)
         clear_existing_checkpoints: If True, clear all checkpoints before starting
+        parallel_workers: Number of parallel verification calls (default: 5)
 
     Returns:
         Dictionary with all results
@@ -731,7 +629,11 @@ def run_fact_check_workflow(
         clear_checkpoints()
 
     print("=" * 60)
-    print("FACT-CHECKING WORKFLOW")
+    print("FACT-CHECKING WORKFLOW (OpenAI GPT-5-mini)")
+    print(f"  Model: {MODEL}")
+    print(f"  Reasoning effort: {REASONING_EFFORT}")
+    print(f"  Max retries: {MAX_RETRIES}")
+    print(f"  Parallel workers: {parallel_workers}")
     if resume:
         print("  (Checkpoint mode: will resume from previous progress)")
     print("=" * 60)
@@ -761,7 +663,7 @@ def run_fact_check_workflow(
         all_claims = extract_all_claims(extracted_texts, use_checkpoints=resume)
 
         # Save extracted claims
-        claims_output = OUTPUT_DIR / "extracted_claims.json"
+        claims_output = OUTPUT_DIR / "extracted_claims_openai.json"
         with open(claims_output, 'w', encoding='utf-8') as f:
             json.dump([asdict(c) for c in all_claims], f, indent=2)
         print(f"Saved {len(all_claims)} claims to {claims_output}")
@@ -774,18 +676,21 @@ def run_fact_check_workflow(
     print(f"  - Dataset-referenced: {len(dataset_claims)}")
     print(f"  - External-referenced: {len(external_claims)}")
 
-    # Step 4: Verify external-referenced claims using web search
-    print("\n[4/4] Verifying external-referenced claims (web search enabled)...")
+    # Step 4: Verify external-referenced claims using web search (parallel)
+    print(f"\n[4/4] Verifying external-referenced claims (OpenAI web search, {parallel_workers} parallel workers)...")
     external_results = []
     skipped_external = 0
-    for i, claim in enumerate(external_claims):
+    claims_to_verify = []
+
+    # First, check checkpoints and separate cached vs. new claims
+    revalidate_count = 0
+    for claim in external_claims:
         claim_id = get_claim_id(claim)
 
-        # Check for existing checkpoint
         if resume:
-            checkpoint = load_checkpoint("external_verification", claim_id)
+            # Use validate=True to skip checkpoints with parse errors
+            checkpoint = load_checkpoint("external_verification", claim_id, validate=True)
             if checkpoint:
-                # Handle both new 'status' field and legacy 'is_verified'
                 status = checkpoint.get("status")
                 if status is None:
                     status = "verified" if checkpoint.get("is_verified", False) else "no_support"
@@ -798,13 +703,25 @@ def run_fact_check_workflow(
                 ))
                 skipped_external += 1
                 continue
+            else:
+                # Check if checkpoint exists but was invalid (parse error)
+                invalid_checkpoint = load_checkpoint("external_verification", claim_id, validate=False)
+                if invalid_checkpoint:
+                    revalidate_count += 1
 
-        print(f"  Verifying {i+1}/{len(external_claims)} with web search...", end="\r")
+        claims_to_verify.append((claim, claim_id))
+
+    print(f"  Loaded {skipped_external} from checkpoints, {len(claims_to_verify)} to verify...")
+    if revalidate_count > 0:
+        print(f"  (Re-running {revalidate_count} claims with previous parse errors)")
+
+    def verify_and_save(claim_and_id: tuple) -> VerificationResult:
+        """Verify a single claim and save checkpoint."""
+        claim, claim_id = claim_and_id
         try:
             result = verify_external_claim(claim)
-            external_results.append(result)
 
-            # Save checkpoint
+            # Save checkpoint (thread-safe file write)
             if resume:
                 save_checkpoint("external_verification", claim_id, {
                     "claim_id": claim_id,
@@ -814,25 +731,47 @@ def run_fact_check_workflow(
                     "explanation": result.explanation,
                     "evidence": result.evidence
                 })
+            return result
         except Exception as e:
             print(f"\n  Error verifying claim {claim_id}: {e}")
-            external_results.append(VerificationResult(
+            return VerificationResult(
                 claim=claim,
                 status="no_support",
                 confidence=0.0,
                 explanation=f"Verification error: {str(e)}",
                 evidence=["[!] Error during verification"]
-            ))
+            )
+
+    # Run parallel verification
+    if claims_to_verify:
+        completed = 0
+        total_to_verify = len(claims_to_verify)
+
+        with ThreadPoolExecutor(max_workers=parallel_workers) as executor:
+            future_to_claim = {
+                executor.submit(verify_and_save, item): item
+                for item in claims_to_verify
+            }
+
+            for future in as_completed(future_to_claim):
+                result = future.result()
+                external_results.append(result)
+                completed += 1
+                print(f"  Verified {completed}/{total_to_verify} claims ({parallel_workers} parallel)...", end="\r")
+
+        print()  # New line after progress
 
     print(f"  Verified {len(external_results)} external claims with web search" +
           (f" ({skipped_external} from checkpoints)" if skipped_external > 0 else ""))
 
-    # Compile results with three-way classification
+    # Compile results
     verified_count = sum(1 for r in external_results if r.status == "verified")
     contradicted_count = sum(1 for r in external_results if r.status == "contradicted")
     no_support_count = sum(1 for r in external_results if r.status == "no_support")
 
     results = {
+        "model": MODEL,
+        "reasoning_effort": REASONING_EFFORT,
         "dataset_verification_results": [
             {
                 "claim": asdict(c)
@@ -843,7 +782,7 @@ def run_fact_check_workflow(
             {
                 "claim": asdict(r.claim),
                 "status": r.status,
-                "is_verified": r.is_verified,  # Keep for backwards compatibility
+                "is_verified": r.is_verified,
                 "confidence": r.confidence,
                 "explanation": r.explanation,
                 "evidence": r.evidence
@@ -860,21 +799,21 @@ def run_fact_check_workflow(
                 "verified": verified_count,
                 "contradicted": contradicted_count,
                 "no_support": no_support_count,
-                "not_verified": contradicted_count + no_support_count,  # Legacy field
+                "not_verified": contradicted_count + no_support_count,
                 "avg_confidence": sum(r.confidence for r in external_results) / len(external_results) if external_results else 0
             }
         }
     }
 
     # Save results
-    results_output = OUTPUT_DIR / "fact_check_results.json"
-    with open(results_output, 'w') as f:
+    results_output = OUTPUT_DIR / "fact_check_results_openai.json"
+    with open(results_output, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2)
     print(f"\nResults saved to {results_output}")
 
     # Print summary
     print("\n" + "=" * 60)
-    print("FACT-CHECK SUMMARY")
+    print("FACT-CHECK SUMMARY (OpenAI GPT-5-mini)")
     print("=" * 60)
     print(f"\nTotal claims extracted: {results['summary']['total_claims']}")
     print(f"\nDataset-referenced claims: {results['summary']['dataset_referenced']['total']} (not verified in this workflow)")
@@ -890,44 +829,23 @@ def run_fact_check_workflow(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Run fact-checking workflow on materials science dataset")
+    parser = argparse.ArgumentParser(description="Run fact-checking workflow using OpenAI GPT-5-mini")
 
-    # Mode selection
-    parser.add_argument("--reverify-external", action="store_true",
-                       help="Re-verify unverified external claims with higher search effort")
-    parser.add_argument("--search-effort", type=str, default="medium",
-                       choices=["low", "medium", "high"],
-                       help="Search effort level for external verification (default: medium)")
-    parser.add_argument("--max-claims", type=int, default=None,
-                       help="Limit number of claims to re-verify (for --reverify-external mode)")
-    parser.add_argument("--start-from-claim", type=int, default=0,
-                       help="Index to start re-verification from (0-based, for --reverify-external mode)")
-    parser.add_argument("--results-file", type=str, default=None,
-                       help="Path to existing results file (for --reverify-external mode)")
-
-    # Original workflow arguments
     parser.add_argument("--max-samples", type=int, default=None, help="Limit number of samples to process")
     parser.add_argument("--skip-extraction", action="store_true", help="Skip claim extraction, load from file")
     parser.add_argument("--claims-file", type=str, default=None, help="Path to pre-extracted claims file")
     parser.add_argument("--no-resume", action="store_true", help="Disable checkpoint resumption (start fresh)")
     parser.add_argument("--clear-checkpoints", action="store_true", help="Clear all checkpoints before starting")
+    parser.add_argument("--parallel", type=int, default=PARALLEL_WORKERS,
+                        help=f"Number of parallel verification workers (default: {PARALLEL_WORKERS})")
 
     args = parser.parse_args()
 
-    if args.reverify_external:
-        # Run re-verification mode for unverified external claims
-        reverify_unverified_external_claims(
-            results_file=args.results_file,
-            search_effort=args.search_effort,
-            max_claims=args.max_claims,
-            start_from_claim=args.start_from_claim
-        )
-    else:
-        # Run standard fact-checking workflow
-        run_fact_check_workflow(
-            max_samples=args.max_samples,
-            skip_extraction=args.skip_extraction,
-            claims_file=args.claims_file,
-            resume=not args.no_resume,
-            clear_existing_checkpoints=args.clear_checkpoints
-        )
+    run_fact_check_workflow(
+        max_samples=args.max_samples,
+        skip_extraction=args.skip_extraction,
+        claims_file=args.claims_file,
+        resume=not args.no_resume,
+        clear_existing_checkpoints=args.clear_checkpoints,
+        parallel_workers=args.parallel
+    )
