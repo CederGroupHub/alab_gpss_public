@@ -923,10 +923,10 @@ async def load_sample(request: LoadSampleRequest):
         "completed_at": datetime.now().isoformat(),
         "error": None,
         "progress": 1.0,
-        "loaded_ionic_measurement_id": (
+        "latest_ionic_measurement_id": (
             ionic_measurement.measurement_id if ionic_measurement else None
         ),
-        "loaded_electronic_measurement_id": (
+        "latest_electronic_measurement_id": (
             electronic_measurement.measurement_id if electronic_measurement else None
         ),
     }
